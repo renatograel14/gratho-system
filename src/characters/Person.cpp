@@ -3,7 +3,7 @@
 
 namespace characters {
 
-Person::Person(int health, const items::Weapon& weapon)
+Person::Person(int health, items::Weapon& weapon)
     : health(health), weapon(weapon) {}
 
 void Person::TakeDamage(int amount) {
@@ -13,6 +13,10 @@ void Person::TakeDamage(int amount) {
 
 int Person::GetHealth() const {
     return health;
+}
+
+void Person::SetWeapon(items::Weapon& newWeapon) {
+    weapon = newWeapon;
 }
 
 const items::Weapon& Person::GetWeapon() const {

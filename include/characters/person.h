@@ -7,14 +7,17 @@ namespace characters {
 
 class Person {
 public:
-    Person(int health, const items::Weapon& weapon);
+    Person(int health, items::Weapon& weapon);
     void TakeDamage(int amount);
+    
     int GetHealth() const;
+
     const items::Weapon& GetWeapon() const;
+    void SetWeapon(items::Weapon& newWeapon);
 
 private:
     int health;
-    const items::Weapon& weapon;
+    items::Weapon& weapon;
 };
 
 }

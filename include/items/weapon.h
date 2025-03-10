@@ -8,7 +8,7 @@ class Weapon {
 public:
     Weapon(int damage);
     int GetDamage() const;
-
+    void SetDamage(int newDamage);
 private:
     int damage;
 };

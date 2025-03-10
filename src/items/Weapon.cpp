@@ -9,4 +9,8 @@ int Weapon::GetDamage() const {
     return damage;
 }
 
+void Weapon::SetDamage(int newDamage) {
+    damage = newDamage;
+}
+
 } // namespace items
