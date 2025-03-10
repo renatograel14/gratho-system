@@ -1,4 +1,3 @@
-// src/main.cpp
 #include "characters/Person.h"
 #include "items/Weapon.h"
 #include <iostream>
