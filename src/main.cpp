@@ -10,7 +10,8 @@ int main()
 {
     std::cout << "Running..." << std::endl;
 
-    characters::PlayerCharacterClass fighter("Fighter", 10);
+    characters::PlayerCharacterClass fighter("Fighter", 10, characters::EnumAttributes::Strength);
+    
     characters::EnumAttributes boost[6] = {
         characters::EnumAttributes::Dexterity,
         characters::EnumAttributes::Strength,

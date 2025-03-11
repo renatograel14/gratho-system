@@ -44,15 +44,20 @@ namespace characters
     {
         std::map<EnumAttributes, int> totalBoosts;
 
+        // init
         for (int i = 0; i < 6; ++i) {
             totalBoosts[static_cast<EnumAttributes>(i)] = 0;
         }
 
+        // boost by ancestry
         const AttributeBoost& ancestryBoost = ancestry.GetBoost();
         for (int i = 0; i < 6; ++i) {
             EnumAttributes attr = static_cast<EnumAttributes>(i);
             totalBoosts[attr] += ancestryBoost.CountAttributeInBoost(attr);
         }
+
+        // boost by class key attribute
+        totalBoosts[playerClass.GetKeyAttribute()]++;
 
         return totalBoosts;
     }
