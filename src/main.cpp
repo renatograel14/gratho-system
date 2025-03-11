@@ -13,6 +13,8 @@ int main()
     characters::PlayerCharacterClass fighter("Fighter", 10);
     characters::EnumAttributes boost[6] = {
         characters::EnumAttributes::Dexterity,
+        characters::EnumAttributes::Strength,
+        characters::EnumAttributes::Intelligence,
     };
     characters::EnumAttributes flaw[6] = {
         characters::EnumAttributes::Constitution,
