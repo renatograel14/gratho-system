@@ -7,7 +7,9 @@ int main() {
     std::cout << "Running...";
 
     characters::PlayerCharacterAncestry human("Human", 8);
-    characters::PlayerCharacterClass fighter("Fighter");
+    
+    characters::PlayerCharacterClassHealth figherHealth = {"constitution", 10};
+    characters::PlayerCharacterClass fighter("Fighter", figherHealth);
     characters::PlayerCharacterSheet playerCharacterFighter("José", human, fighter);
 
     return 0;
