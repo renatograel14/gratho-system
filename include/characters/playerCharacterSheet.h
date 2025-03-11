@@ -19,6 +19,7 @@ namespace characters
         );
         int GetAttribute(characters::EnumAttributes attributeName) const;
         int GetHealth() const;
+        std::string GetName() const;
 
     private:
         std::string name;

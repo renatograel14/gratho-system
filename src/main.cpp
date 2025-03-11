@@ -15,6 +15,8 @@ int main()
 
     characters::PlayerCharacterSheet playerCharacterFighter("José", human, fighter, attr);
 
-    std::cout << "Current Health " << playerCharacterFighter.GetHealth() << std::endl;
+
+    std::cout << "Name: " << playerCharacterFighter.GetName() << std::endl;
+    std::cout << "Max Health Points " << playerCharacterFighter.GetHealth() << std::endl;
     return 0;
 }

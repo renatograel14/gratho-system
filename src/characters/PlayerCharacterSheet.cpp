@@ -12,6 +12,10 @@ namespace characters
         std::map<characters::EnumAttributes, int> attributes)
         : name(name), ancestry(ancestry), playerClass(playerClass), attributes(attributes) {}
 
+    std::string PlayerCharacterSheet::GetName() const {
+        return name;
+    }
+
     int PlayerCharacterSheet::GetAttribute(characters::EnumAttributes attr) const {
         return attributes.at(attr);
     }
