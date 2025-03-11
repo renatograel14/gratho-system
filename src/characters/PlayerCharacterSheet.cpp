@@ -1,5 +1,5 @@
 #include "characters/PlayerCharacterSheet.h"
-#include <cmath> // Para usar a função std::floor
+#include <cmath> 
 
 namespace characters
 {
@@ -9,15 +9,12 @@ namespace characters
         PlayerCharacterClass &playerClass)
         : name(name), ancestry(ancestry), playerClass(playerClass)
     {
-        // Inicializa os atributos com valores base (por exemplo, 0)
         for (int i = 0; i < 6; ++i) {
             attributes[static_cast<EnumAttributes>(i)] = 0;
         }
 
-        // Acumula os boosts de todas as fontes
         std::map<EnumAttributes, int> totalBoosts = AccumulateBoosts();
 
-    // Aplica os boosts acumulados aos atributos
         for (const auto& pair : totalBoosts) {
             attributes[pair.first] = CalculateAttributeValue(pair.second);
         }
@@ -47,12 +44,10 @@ namespace characters
     {
         std::map<EnumAttributes, int> totalBoosts;
 
-        // Inicializa os boosts totais com 0
         for (int i = 0; i < 6; ++i) {
             totalBoosts[static_cast<EnumAttributes>(i)] = 0;
         }
 
-        // Acumula os boosts da ancestry
         const AttributeBoost& ancestryBoost = ancestry.GetBoost();
         for (int i = 0; i < 6; ++i) {
             EnumAttributes attr = static_cast<EnumAttributes>(i);
@@ -65,11 +60,10 @@ namespace characters
     int PlayerCharacterSheet::CalculateAttributeValue(int boostCount) const
     {
         if (boostCount <= 4) {
-            return boostCount; // Até 4 boosts, valor = número de boosts
+            return boostCount; 
         } else {
-            // Acima de 4 boosts, cada boost adicional aumenta 0.5
             double value = 4 + (boostCount - 4) * 0.5;
-            return static_cast<int>(std::floor(value)); // Arredonda para baixo
+            return static_cast<int>(std::floor(value));
         }
     }
 }
