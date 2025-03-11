@@ -1,5 +1,7 @@
 #include <iostream>
 #include "characters/PlayerCharacterClass.h"
+#include "characters/EnumAttributes.h"
+#include "characters/AttributeBoost.h"
 
 namespace characters
 {
@@ -14,5 +16,12 @@ namespace characters
     }
     characters::EnumAttributes PlayerCharacterClass::GetKeyAttribute() const {
         return keyAttribute;
+    }
+
+    characters::AttributeBoost PlayerCharacterClass::GetBoost() const {
+        characters::AttributeBoost classBoost(name, {{
+            keyAttribute, true
+        }},{{}});
+        return classBoost;
     }
 }
