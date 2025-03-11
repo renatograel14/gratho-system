@@ -30,6 +30,14 @@ int main()
     }, {});
     characters::PlayerCharacterSheet playerCharacterFighter("José", human, fighter, firstLevelBoost);
 
+    characters::AttributeBoost fifthLevelBoost("Level 5", {
+        {characters::EnumAttributes::Strength, true},
+        {characters::EnumAttributes::Constitution, true},
+        {characters::EnumAttributes::Intelligence, true},
+        {characters::EnumAttributes::Dexterity, true},
+    }, {});
+    playerCharacterFighter.AddLevelBoost(fifthLevelBoost);
+
     std::cout << "Name: " << playerCharacterFighter.GetName() << std::endl;
     std::cout << "Max Health Points: " << playerCharacterFighter.GetHealth() << std::endl;
     return 0;

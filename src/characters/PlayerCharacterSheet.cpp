@@ -77,6 +77,10 @@ namespace characters
         return totalBoosts;
     }
 
+    void PlayerCharacterSheet::AddLevelBoost(AttributeBoost newLevelBoost) {
+        levelBoosts.push_back(newLevelBoost);
+    }
+
     int PlayerCharacterSheet::CalculateAttributeValue(int boostCount) const
     {
         if (boostCount <= 4)
