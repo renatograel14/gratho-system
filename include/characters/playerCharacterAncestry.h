@@ -11,6 +11,7 @@ namespace characters
     public:
         PlayerCharacterAncestry(std::string name, int health, characters::AttributeBoost boost);
         int GetHealth() const;
+        const AttributeBoost GetBoost() const;
 
     private:
         std::string name;

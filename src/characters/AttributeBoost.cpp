@@ -8,4 +8,15 @@ namespace characters
         characters::EnumAttributes (&boost)[6],
         characters::EnumAttributes (&flaw)[6]
     ) : source(source), boost(boost), flaw(flaw) {}
+
+    int AttributeBoost::CountAttributeInBoost(characters::EnumAttributes attr) const
+    {
+        int count = 0;
+        for (int i = 0; i < 6; ++i) {
+            if (boost[i] == attr) {
+                count++;
+            }
+        }
+        return count;
+    }
 }

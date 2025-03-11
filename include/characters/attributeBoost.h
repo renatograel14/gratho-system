@@ -14,6 +14,8 @@ namespace characters
             characters::EnumAttributes (&boost)[6],
             characters::EnumAttributes (&flaw)[6]);
 
+        int CountAttributeInBoost(characters::EnumAttributes attr) const;
+
     private:
         std::string source;
         characters::EnumAttributes (&boost)[6];

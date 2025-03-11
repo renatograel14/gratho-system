@@ -13,4 +13,9 @@ namespace characters
     {
         return health;
     }
+
+    const AttributeBoost PlayerCharacterAncestry::GetBoost() const
+    {
+        return boost;
+    }
 }

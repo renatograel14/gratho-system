@@ -14,8 +14,7 @@ namespace characters
         PlayerCharacterSheet(
             std::string name, 
             PlayerCharacterAncestry &ancestry, 
-            PlayerCharacterClass &playerClass,
-            std::map<characters::EnumAttributes, int> attributes
+            PlayerCharacterClass &playerClass
         );
         int GetAttribute(characters::EnumAttributes attributeName) const;
         int GetHealth() const;
