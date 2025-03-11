@@ -17,7 +17,11 @@ namespace characters
     }
 
     int PlayerCharacterSheet::GetAttribute(characters::EnumAttributes attr) const {
-        return attributes.at(attr);
+        try {
+            return attributes.at(attr);
+        } catch(const std::out_of_range outOfRangeError) {
+            return 0;
+        }
     }
 
     int PlayerCharacterSheet::GetHealth() const {
