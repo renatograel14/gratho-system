@@ -7,7 +7,7 @@ add_library(items STATIC
 target_include_directories(items PUBLIC include)
 
 add_library(characters STATIC
-    src/characters/Person.cpp
+    src/characters/PlayerCharacterSheet.cpp
 )
 target_include_directories(characters PUBLIC include)
 target_link_libraries(characters PUBLIC items) 
