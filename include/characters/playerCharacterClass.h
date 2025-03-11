@@ -4,20 +4,15 @@
 
 namespace characters
 {
-    struct PlayerCharacterClassHealth
-    {
-        std::string attribute;
-        int healthPoints;
-    };
-    
     class PlayerCharacterClass
     {
     public:
-        PlayerCharacterClass(std::string name, PlayerCharacterClassHealth health);
+        PlayerCharacterClass(std::string name, int health);
+        int GetHealth() const;
 
     private:
         std::string name;
-        PlayerCharacterClassHealth health;
+        int health;
     };
 
 }

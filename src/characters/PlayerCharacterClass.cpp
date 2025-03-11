@@ -1,6 +1,10 @@
 #include <iostream>
 #include "characters/PlayerCharacterClass.h"
 
-namespace characters {
-    PlayerCharacterClass::PlayerCharacterClass(std::string name, characters::PlayerCharacterClassHealth health) : name(name), health(health) {}
+namespace characters
+{
+    PlayerCharacterClass::PlayerCharacterClass(std::string name, int health) : name(name), health(health) {}
+    int PlayerCharacterClass::GetHealth() const {
+        return health;
+    }
 }
