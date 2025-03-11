@@ -7,6 +7,7 @@ add_library(items STATIC
 target_include_directories(items PUBLIC include)
 
 add_library(characters STATIC
+    src/characters/AttributeBoost.cpp
     src/characters/PlayerCharacterAncestry.cpp
     src/characters/PlayerCharacterClass.cpp
     src/characters/PlayerCharacterSheet.cpp

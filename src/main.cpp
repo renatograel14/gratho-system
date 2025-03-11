@@ -2,14 +2,19 @@
 #include "characters/PlayerCharacterClass.h"
 #include "characters/PlayerCharacterAncestry.h"
 #include "characters/PlayerCharacterSheet.h"
+#include "characters/AttributeBoost.h"
 #include "characters/EnumAttributes.h"
+
 
 int main()
 {
     std::cout << "Running..." << std::endl;
 
-    characters::PlayerCharacterAncestry human("Human", 8);
     characters::PlayerCharacterClass fighter("Fighter", 10);
+    characters::EnumAttributes boost[6] = {characters::EnumAttributes::Constitution, characters::EnumAttributes::Dexterity};
+    characters::EnumAttributes flaw[6] = {};
+    characters::AttributeBoost humanBoost("Human", boost, flaw);
+    characters::PlayerCharacterAncestry human("Human", 8, humanBoost);
 
     std::map<characters::EnumAttributes, int> attr = {
         {characters::EnumAttributes::Strength, 4},
