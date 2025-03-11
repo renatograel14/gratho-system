@@ -7,8 +7,7 @@ namespace characters
         std::string name,
         PlayerCharacterAncestry &ancestry,
         PlayerCharacterClass &playerClass,
-        AttributeBoost firstLevelBoost
-    )
+        AttributeBoost firstLevelBoost)
         : name(name), ancestry(ancestry), playerClass(playerClass), levelBoosts({firstLevelBoost})
     {
         for (int i = 0; i < 6; ++i)
@@ -47,6 +46,15 @@ namespace characters
         return ancestry.GetHealth() + playerClass.GetHealth() + constitution;
     }
 
+    std::vector<characters::AttributeBoost> PlayerCharacterSheet::GetAllAttributeBoosts() const
+    {
+        const AttributeBoost &ancestryBoost = ancestry.GetBoost();
+        const AttributeBoost &playerClassBoost = playerClass.GetBoost();
+        std::vector<characters::AttributeBoost> boosts({ancestryBoost, playerClassBoost});
+        boosts.insert(boosts.end(), levelBoosts.begin(), levelBoosts.end());
+        return boosts;
+    }
+
     std::map<characters::EnumAttributes, int> PlayerCharacterSheet::AccumulateBoosts() const
     {
         std::map<EnumAttributes, int> totalBoosts;
@@ -57,18 +65,10 @@ namespace characters
             totalBoosts[static_cast<EnumAttributes>(i)] = 0;
         }
 
-        const AttributeBoost &ancestryBoost = ancestry.GetBoost();
-        const AttributeBoost &playerClassBoost = playerClass.GetBoost();
-
-        for (int i = 0; i < 6; ++i)
+        for (const auto &boost : GetAllAttributeBoosts())
         {
-            EnumAttributes attr = static_cast<EnumAttributes>(i);
-            totalBoosts[attr] += ancestryBoost.CountAttributeInBoost(attr);
-            totalBoosts[attr] += playerClassBoost.CountAttributeInBoost(attr);
-        }
-
-         for (const auto& boost : levelBoosts) {
-            for (int i = 0; i < 6; ++i) {
+            for (int i = 0; i < 6; ++i)
+            {
                 EnumAttributes attr = static_cast<EnumAttributes>(i);
                 totalBoosts[attr] += boost.CountAttributeInBoost(attr);
             }

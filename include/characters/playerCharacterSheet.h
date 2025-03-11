@@ -23,6 +23,7 @@ namespace characters
         std::string GetName() const;
         int GetAttribute(characters::EnumAttributes attr) const;
         int GetHealth() const;
+        std::vector<characters::AttributeBoost> GetAllAttributeBoosts() const;
         void AddLevelBoost();
 
     private:
