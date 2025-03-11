@@ -30,8 +30,11 @@ namespace characters
 
     int PlayerCharacterSheet::GetAttribute(characters::EnumAttributes attr) const
     {
-        // Retorna o valor do atributo (já com os boosts aplicados)
-        return attributes.at(attr);
+        try {
+            return attributes.at(attr);
+        } catch (std::out_of_range) {
+            return 0;
+        }
     }
 
     int PlayerCharacterSheet::GetHealth() const
