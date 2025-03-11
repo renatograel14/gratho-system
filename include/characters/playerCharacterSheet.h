@@ -3,17 +3,19 @@
 
 #include <iostream>
 #include "characters/PlayerCharacterClass.h"
+#include "characters/PlayerCharacterAncestry.h"
 
 namespace characters
 {
     class PlayerCharacterSheet
     {
     public:
-        PlayerCharacterSheet(std::string name, PlayerCharacterClass& playerClass);
+        PlayerCharacterSheet(std::string name, PlayerCharacterAncestry &ancestry, PlayerCharacterClass &playerClass);
 
     private:
         std::string name;
-        PlayerCharacterClass& playerClass;
+        PlayerCharacterAncestry &ancestry;
+        PlayerCharacterClass &playerClass;
     };
 
 }
