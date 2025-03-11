@@ -11,15 +11,15 @@ namespace characters
     public:
         AttributeBoost(
             std::string source,
-            characters::EnumAttributes (&boost)[6],
-            characters::EnumAttributes (&flaw)[6]);
+            std::map<characters::EnumAttributes, bool> boost,
+            std::map<characters::EnumAttributes, bool> flaw);
 
         int CountAttributeInBoost(characters::EnumAttributes attr) const;
 
     private:
         std::string source;
-        characters::EnumAttributes (&boost)[6];
-        characters::EnumAttributes (&flaw)[6];
+        std::map<characters::EnumAttributes, bool> boost;
+        std::map<characters::EnumAttributes, bool> flaw;
     };
 
 }

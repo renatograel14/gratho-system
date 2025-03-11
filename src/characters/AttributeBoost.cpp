@@ -5,20 +5,22 @@ namespace characters
 {
     AttributeBoost::AttributeBoost(
         std::string source,
-        characters::EnumAttributes (&boost)[6],
-        characters::EnumAttributes (&flaw)[6]
+        std::map<characters::EnumAttributes, bool> boost,
+        std::map<characters::EnumAttributes, bool> flaw
     ) : source(source), boost(boost), flaw(flaw) {}
 
     int AttributeBoost::CountAttributeInBoost(characters::EnumAttributes attr) const
     {
+
         int count = 0;
-        for (int i = 0; i < 6; ++i) {
-            if (boost[i] == attr) {
+        for(const auto& pair : boost) {
+            if(pair.first == attr && pair.second) {
                 count++;
             }
         }
-        for (int i = 0; i < 6; ++i) {
-            if (flaw[i] == attr) {
+
+        for(const auto& pair : flaw) {
+            if(pair.first == attr && pair.second) {
                 count--;
             }
         }

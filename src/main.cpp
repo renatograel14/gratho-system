@@ -12,14 +12,14 @@ int main()
 
     characters::PlayerCharacterClass fighter("Fighter", 10, characters::EnumAttributes::Strength);
     
-    characters::EnumAttributes boost[6] = {
-        characters::EnumAttributes::Dexterity,
-        characters::EnumAttributes::Strength,
-        characters::EnumAttributes::Intelligence,
+    std::map<characters::EnumAttributes, bool> boost = {
+       { characters::EnumAttributes::Strength,true},
+       { characters::EnumAttributes::Intelligence,true},
+       { characters::EnumAttributes::Dexterity,true},
     };
-    characters::EnumAttributes flaw[6] = {
-        characters::EnumAttributes::Constitution,
-    };
+    std::map<characters::EnumAttributes, bool> flaw = {
+        { characters::EnumAttributes::Constitution,true},
+     };
     characters::AttributeBoost humanBoost("Human", boost, flaw);
     characters::PlayerCharacterAncestry human("Human", 8, humanBoost);
 
