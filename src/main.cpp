@@ -6,7 +6,7 @@
 int main() {
     std::cout << "Running...";
 
-    characters::PlayerCharacterAncestry human("Human");
+    characters::PlayerCharacterAncestry human("Human", 8);
     characters::PlayerCharacterClass fighter("Fighter");
     characters::PlayerCharacterSheet playerCharacterFighter("José", human, fighter);
 

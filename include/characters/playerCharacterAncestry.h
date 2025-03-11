@@ -8,10 +8,12 @@ namespace characters
     class PlayerCharacterAncestry
     {
     public:
-        PlayerCharacterAncestry(std::string name);
+        PlayerCharacterAncestry(std::string name, int health);
+        int GetHealth() const;
 
     private:
         std::string name;
+        int health;
     };
 
 }
