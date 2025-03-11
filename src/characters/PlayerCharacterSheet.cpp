@@ -1,5 +1,7 @@
 #include "characters/PlayerCharacterSheet.h"
 #include <cmath>
+#include <iostream>
+#include <iomanip>
 
 namespace characters
 {
@@ -77,8 +79,19 @@ namespace characters
         return totalBoosts;
     }
 
-    void PlayerCharacterSheet::AddLevelBoost(AttributeBoost newLevelBoost) {
+    void PlayerCharacterSheet::AddLevelBoost(AttributeBoost newLevelBoost)
+    {
         levelBoosts.push_back(newLevelBoost);
+    }
+
+    void PlayerCharacterSheet::PrintAllAtttributes() const
+    {
+        std::cout << "Attributes" << std::endl;
+        for (const auto pair : attributes)
+        {
+            std::string attrName = EnumAttributesToString.at(pair.first);
+            std::cout << attrName << ": " << std::setw(15 - attrName.length()) << std::right  << pair.second << std::endl;
+        }
     }
 
     int PlayerCharacterSheet::CalculateAttributeValue(int boostCount) const

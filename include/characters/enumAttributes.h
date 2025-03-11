@@ -12,8 +12,26 @@ namespace characters
         Dexterity,
         Constitution,
         Intelligence,
-        Winsdom,
+        Wisdom,
         Charisma,
+    };
+
+    static const std::map<EnumAttributes, std::string> EnumAttributesToString = {
+        {EnumAttributes::Strength, "Strength"},
+        {EnumAttributes::Dexterity, "Dexterity"},
+        {EnumAttributes::Constitution, "Constitution"},
+        {EnumAttributes::Intelligence, "Intelligence"},
+        {EnumAttributes::Wisdom, "Wisdom"},
+        {EnumAttributes::Charisma, "Charisma"}
+    };
+
+    static const std::map<std::string, EnumAttributes> StringToEnumAttributes = {
+        {"Strength", EnumAttributes::Strength},
+        {"Dexterity", EnumAttributes::Dexterity},
+        {"Constitution", EnumAttributes::Constitution},
+        {"Intelligence", EnumAttributes::Intelligence},
+        {"Wisdom", EnumAttributes::Wisdom},
+        {"Charisma", EnumAttributes::Charisma}
     };
 }
 

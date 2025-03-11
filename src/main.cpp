@@ -38,7 +38,12 @@ int main()
     }, {});
     playerCharacterFighter.AddLevelBoost(fifthLevelBoost);
 
+    std::cout << std::endl;
+    std::cout << std::endl;
     std::cout << "Name: " << playerCharacterFighter.GetName() << std::endl;
-    std::cout << "Max Health Points: " << playerCharacterFighter.GetHealth() << std::endl;
+    std::cout << "Health Points: " << playerCharacterFighter.GetHealth() << std::endl;
+    playerCharacterFighter.PrintAllAtttributes();
+    std::cout << std::endl;
+    std::cout << std::endl;
     return 0;
 }
