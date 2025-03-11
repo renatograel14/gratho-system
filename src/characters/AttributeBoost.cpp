@@ -17,6 +17,11 @@ namespace characters
                 count++;
             }
         }
+        for (int i = 0; i < 6; ++i) {
+            if (flaw[i] == attr) {
+                count--;
+            }
+        }
         return count;
     }
 }

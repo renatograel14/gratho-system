@@ -11,8 +11,12 @@ int main()
     std::cout << "Running..." << std::endl;
 
     characters::PlayerCharacterClass fighter("Fighter", 10);
-    characters::EnumAttributes boost[6] = {characters::EnumAttributes::Constitution, characters::EnumAttributes::Dexterity};
-    characters::EnumAttributes flaw[6] = {};
+    characters::EnumAttributes boost[6] = {
+        characters::EnumAttributes::Dexterity,
+    };
+    characters::EnumAttributes flaw[6] = {
+        characters::EnumAttributes::Constitution,
+    };
     characters::AttributeBoost humanBoost("Human", boost, flaw);
     characters::PlayerCharacterAncestry human("Human", 8, humanBoost);
 
