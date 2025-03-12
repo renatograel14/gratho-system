@@ -11,6 +11,12 @@ jobs:
       - name: Checkout código
         uses: actions/checkout@v4
 
+      - name: Instalar cppcheck
+        run: sudo apt-get update && sudo apt-get install -y cppcheck
+
+      - name: Rodar cppcheck
+        run: cppcheck --enable=all --inconclusive --quiet --error-exitcode=1 .
+
       - name: Configurar CMake
         run: cmake -B build
 
