@@ -2,6 +2,7 @@
 #include <cmath>
 #include <iostream>
 #include <iomanip>
+#include <algorithm>
 
 namespace characters
 {
@@ -13,6 +14,7 @@ namespace characters
         : name(name), ancestry(ancestry), playerClass(playerClass), levelBoosts({firstLevelBoost})
     {
         CalculateAttributes();
+        SetSkills();
     }
 
     std::string PlayerCharacterSheet::GetName() const
@@ -81,11 +83,12 @@ namespace characters
         for (const auto pair : attributes)
         {
             std::string attrName = EnumAttributesToString.at(pair.first);
-            std::cout << attrName << ": " << std::setw(15 - attrName.length()) << std::right  << pair.second << std::endl;
+            std::cout << attrName << ": " << std::setw(15 - attrName.length()) << std::right << pair.second << std::endl;
         }
     }
 
-    void PlayerCharacterSheet::CalculateAttributes() {
+    void PlayerCharacterSheet::CalculateAttributes()
+    {
         for (int i = 0; i < 6; ++i)
         {
             attributes[static_cast<EnumAttributes>(i)] = 0;
@@ -109,6 +112,29 @@ namespace characters
         {
             double value = 4 + (boostCount - 4) * 0.5;
             return static_cast<int>(std::floor(value));
+        }
+    }
+
+    void PlayerCharacterSheet::SetSkills()
+    {
+        skills.push_back(Skill("Creation",
+                               "Name",
+                               characters::EnumAttributes::Strength,
+                               characters::EnumProficiencies::Untrained));
+    }
+
+    void PlayerCharacterSheet::AddSkill(Skill newSkill)
+    {
+        skills.push_back(newSkill);
+    }
+
+    characters::Skill PlayerCharacterSheet::GetSkill(std::string skillName)
+    {
+        auto it = std::find_if(skills.begin(), skills.end(), [&skillName](const characters::Skill &obj) {return obj.GetSkillName() == skillName;});
+        if (it != skills.end())
+        {
+            auto index = std::distance(skills.begin(), it);
+            return skills.at(index);
         }
     }
 }
