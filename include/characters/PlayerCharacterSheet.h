@@ -8,7 +8,7 @@
 #include "characters/PlayerCharacterClass.h"
 #include "characters/PlayerCharacterAncestry.h"
 #include "characters/EnumAttributes.h"
-#include "Skill.h"
+#include "characters/Skill.h"
 
 namespace characters
 {
