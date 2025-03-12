@@ -1,8 +1,8 @@
 #ifndef SKILL_H
 #define SKILL_H
 #include <iostream>
-#include "enumAttributes.h"
-#include "enumProficiences.h"
+#include "EnumAttributes.h"
+#include "EnumProficiences.h"
 
 namespace characters
 {

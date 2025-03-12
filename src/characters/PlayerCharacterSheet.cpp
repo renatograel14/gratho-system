@@ -117,10 +117,10 @@ namespace characters
 
     void PlayerCharacterSheet::SetSkills()
     {
-        skills.push_back(Skill("Creation",
-                               "Name",
-                               characters::EnumAttributes::Strength,
-                               characters::EnumProficiencies::Untrained));
+        AddSkill(Skill("Creation",
+                       "Name",
+                       characters::EnumAttributes::Strength,
+                       characters::EnumProficiencies::Untrained));
     }
 
     void PlayerCharacterSheet::AddSkill(Skill newSkill)
@@ -130,7 +130,8 @@ namespace characters
 
     characters::Skill PlayerCharacterSheet::GetSkill(std::string skillName)
     {
-        auto it = std::find_if(skills.begin(), skills.end(), [&skillName](const characters::Skill &obj) {return obj.GetSkillName() == skillName;});
+        auto it = std::find_if(skills.begin(), skills.end(), [&skillName](const characters::Skill &obj)
+                               { return obj.GetSkillName() == skillName; });
         if (it != skills.end())
         {
             auto index = std::distance(skills.begin(), it);
