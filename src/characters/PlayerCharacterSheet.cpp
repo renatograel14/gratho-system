@@ -137,5 +137,9 @@ namespace characters
             auto index = std::distance(skills.begin(), it);
             return skills.at(index);
         }
+
+        // todo: separar skill de proficiencia da skill
+        const Skill untrainedSkill("No source", skillName, EnumAttributes::Strength, EnumProficiencies::Untrained);
+        return untrainedSkill;
     }
 }
