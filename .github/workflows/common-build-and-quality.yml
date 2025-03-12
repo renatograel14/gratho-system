@@ -11,19 +11,18 @@ jobs:
       - name: Checkout código
         uses: actions/checkout@v4
 
-      - name: Instalar cppcheck
-        run: sudo apt-get update && sudo apt-get install -y cppcheck
+      - name: Instalar dependências
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cppcheck build-essential cmake
 
       - name: Rodar cppcheck
-        run: cppcheck --enable=all --inconclusive --quiet --error-exitcode=1 .
+        run: |
+          cppcheck --enable=all --inconclusive --quiet --error-exitcode=1 \
+                   -I include -I src .
 
       - name: Configurar CMake
-        run: cmake -B build
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
 
       - name: Compilar Projeto
         run: cmake --build build --config Release
-
-      - name: Verificar Lint (cppcheck)
-        run: |
-          choco install cppcheck -y
-          cppcheck --enable=all --inconclusive --quiet --error-exitcode=1 .
