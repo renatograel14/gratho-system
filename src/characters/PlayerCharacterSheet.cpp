@@ -123,12 +123,12 @@ namespace characters
                        characters::EnumProficiencies::Untrained));
     }
 
-    void PlayerCharacterSheet::AddSkill(Skill newSkill)
+    void PlayerCharacterSheet::AddSkill(const Skill &newSkill)
     {
         skills.push_back(newSkill);
     }
 
-    characters::Skill PlayerCharacterSheet::GetSkill(std::string skillName)
+    characters::Skill PlayerCharacterSheet::GetSkill(const std::string &skillName) const
     {
         auto it = std::find_if(skills.begin(), skills.end(), [&skillName](const characters::Skill &obj)
                                { return obj.GetSkillName() == skillName; });

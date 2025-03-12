@@ -27,8 +27,8 @@ namespace characters
         void AddLevelBoost(const AttributeBoost &newLevelBoost);
         void PrintAllAtttributes() const;
         std::vector<characters::AttributeBoost> GetAllAttributeBoosts() const;
-        void AddSkill(Skill newSkill);
-        Skill GetSkill(std::string skillName);
+        void AddSkill(const Skill &newSkill);
+        Skill GetSkill(const std::string &skillName) const;
 
     private:
         std::string name;

@@ -40,7 +40,13 @@ int main()
                                                {});
     playerCharacterFighter.AddLevelBoost(fifthLevelBoost);
 
-    std::cout << playerCharacterFighter.GetSkill("Name").GetSkillName();
+    characters::Skill skill("Level 1", "Athlectics", characters::EnumAttributes::Strength, characters::EnumProficiencies::Trained);
+    playerCharacterFighter.AddSkill(skill);
+
+    skill.SetSkillRank(characters::EnumProficiencies::Expert);
+
+    std::cout
+        << playerCharacterFighter.GetSkill("Name").GetSkillName();
     std::cout << std::endl;
     std::cout << std::endl;
     std::cout << "Name: " << playerCharacterFighter.GetName() << std::endl;
