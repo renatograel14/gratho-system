@@ -8,20 +8,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout código
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Instalar dependências
+      - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y cppcheck build-essential cmake
 
-      - name: Rodar cppcheck
+      - name: Run cppcheck
         run: |
           cppcheck --enable=all --suppress=missingIncludeSystem --quiet --error-exitcode=1 -I include -I src .
 
-      - name: Configurar CMake
+      - name: Config CMake
         run: cmake -B build -DCMAKE_BUILD_TYPE=Release
 
-      - name: Compilar Projeto
+      - name: Build
         run: cmake --build build --config Release
