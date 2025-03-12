@@ -1,0 +1,10 @@
+name: ⊶ Pipeline (Pre production)
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-quality:
+    uses: ./.github/workflows/common-build-and-quality.yml

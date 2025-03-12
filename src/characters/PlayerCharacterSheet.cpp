@@ -15,7 +15,7 @@ namespace characters
         CalculateAttributes();
     }
 
-    std::string PlayerCharacterSheet::GetName() const
+    const std::string &PlayerCharacterSheet::GetName() const
     {
         return name;
     }
@@ -26,7 +26,7 @@ namespace characters
         {
             return attributes.at(attr);
         }
-        catch (std::out_of_range &e)
+        catch (const std::out_of_range &e)
         {
             return 0;
         }
@@ -69,7 +69,7 @@ namespace characters
         return totalBoosts;
     }
 
-    void PlayerCharacterSheet::AddLevelBoost(AttributeBoost newLevelBoost)
+    void PlayerCharacterSheet::AddLevelBoost(const AttributeBoost &newLevelBoost)
     {
         levelBoosts.push_back(newLevelBoost);
         CalculateAttributes();
@@ -81,11 +81,12 @@ namespace characters
         for (const auto pair : attributes)
         {
             std::string attrName = EnumAttributesToString.at(pair.first);
-            std::cout << attrName << ": " << std::setw(15 - attrName.length()) << std::right  << pair.second << std::endl;
+            std::cout << attrName << ": " << std::setw(15 - attrName.length()) << std::right << pair.second << std::endl;
         }
     }
 
-    void PlayerCharacterSheet::CalculateAttributes() {
+    void PlayerCharacterSheet::CalculateAttributes()
+    {
         for (int i = 0; i < 6; ++i)
         {
             attributes[static_cast<EnumAttributes>(i)] = 0;

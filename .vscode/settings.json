@@ -53,5 +53,9 @@
         "variant": "cpp",
         "iomanip": "cpp",
         "sstream": "cpp"
-    }
+    },
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "always"
+    },
 }
