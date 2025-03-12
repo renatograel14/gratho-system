@@ -36,6 +36,7 @@ namespace characters
         std::map<characters::EnumAttributes, int> AccumulateBoosts() const;
 
         int CalculateAttributeValue(int boostCount) const;
+        void CalculateAttributes();
     };
 }
 
