@@ -81,11 +81,12 @@ namespace characters
         for (const auto pair : attributes)
         {
             std::string attrName = EnumAttributesToString.at(pair.first);
-            std::cout << attrName << ": " << std::setw(15 - attrName.length()) << std::right  << pair.second << std::endl;
+            std::cout << attrName << ": " << std::setw(15 - attrName.length()) << std::right << pair.second << std::endl;
         }
     }
 
-    void PlayerCharacterSheet::CalculateAttributes() {
+    void PlayerCharacterSheet::CalculateAttributes()
+    {
         for (int i = 0; i < 6; ++i)
         {
             attributes[static_cast<EnumAttributes>(i)] = 0;

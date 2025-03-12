@@ -1,0 +1,23 @@
+name: © Common Build and Quality
+
+on:
+  workflow_call:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Configurar CMake
+        run: cmake -B build
+
+      - name: Compilar Projeto
+        run: cmake --build build --config Release
+
+      - name: Verificar Lint (cppcheck)
+        run: |
+          choco install cppcheck -y
+          cppcheck --enable=all --inconclusive --quiet --error-exitcode=1 .
