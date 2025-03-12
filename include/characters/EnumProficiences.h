@@ -12,13 +12,12 @@ namespace characters
         Legendary,
     };
 
-    static const std::map<EnumProficiencies, int> EnumProficienciesToValue = {
+    static const std::map<characters::EnumProficiencies, int> EnumProficienciesToValue = {
         {EnumProficiencies::Untrained, 0},
         {EnumProficiencies::Trained, 2},
         {EnumProficiencies::Expert, 4},
         {EnumProficiencies::Master, 6},
-        {EnumProficiencies::Legendary, 8}
-    };
+        {EnumProficiencies::Legendary, 8}};
 }
 
 #endif // ENUM_PROFICIENCIES_H
