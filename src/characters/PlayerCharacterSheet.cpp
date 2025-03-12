@@ -12,17 +12,7 @@ namespace characters
         AttributeBoost firstLevelBoost)
         : name(name), ancestry(ancestry), playerClass(playerClass), levelBoosts({firstLevelBoost})
     {
-        for (int i = 0; i < 6; ++i)
-        {
-            attributes[static_cast<EnumAttributes>(i)] = 0;
-        }
-
-        std::map<EnumAttributes, int> totalBoosts = AccumulateBoosts();
-
-        for (const auto &pair : totalBoosts)
-        {
-            attributes[pair.first] = CalculateAttributeValue(pair.second);
-        }
+        CalculateAttributes();
     }
 
     std::string PlayerCharacterSheet::GetName() const
@@ -82,6 +72,7 @@ namespace characters
     void PlayerCharacterSheet::AddLevelBoost(AttributeBoost newLevelBoost)
     {
         levelBoosts.push_back(newLevelBoost);
+        CalculateAttributes();
     }
 
     void PlayerCharacterSheet::PrintAllAtttributes() const
@@ -91,6 +82,20 @@ namespace characters
         {
             std::string attrName = EnumAttributesToString.at(pair.first);
             std::cout << attrName << ": " << std::setw(15 - attrName.length()) << std::right  << pair.second << std::endl;
+        }
+    }
+
+    void PlayerCharacterSheet::CalculateAttributes() {
+        for (int i = 0; i < 6; ++i)
+        {
+            attributes[static_cast<EnumAttributes>(i)] = 0;
+        }
+
+        std::map<EnumAttributes, int> totalBoosts = AccumulateBoosts();
+
+        for (const auto &pair : totalBoosts)
+        {
+            attributes[pair.first] = CalculateAttributeValue(pair.second);
         }
     }
 
