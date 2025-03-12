@@ -20,10 +20,10 @@ namespace characters
             PlayerCharacterClass &playerClass,
             AttributeBoost firstLevelBoost);
 
-        std::string GetName() const;
+        const std::string &GetName() const;
         int GetAttribute(characters::EnumAttributes attr) const;
         int GetHealth() const;
-        void AddLevelBoost(AttributeBoost newLevelBoost);
+        void AddLevelBoost(const AttributeBoost &newLevelBoost);
         void PrintAllAtttributes() const;
         std::vector<characters::AttributeBoost> GetAllAttributeBoosts() const;
 

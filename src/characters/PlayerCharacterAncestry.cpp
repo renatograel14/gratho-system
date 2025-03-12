@@ -6,7 +6,7 @@ namespace characters
     PlayerCharacterAncestry::PlayerCharacterAncestry(
         std::string name,
         int health,
-        characters::AttributeBoost boost)
+        const characters::AttributeBoost &boost)
         : name(name), health(health), boost(boost) {}
 
     int PlayerCharacterAncestry::GetHealth() const
@@ -14,7 +14,7 @@ namespace characters
         return health;
     }
 
-    const AttributeBoost PlayerCharacterAncestry::GetBoost() const
+    const AttributeBoost &PlayerCharacterAncestry::GetBoost() const
     {
         return boost;
     }

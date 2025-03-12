@@ -14,14 +14,10 @@ namespace characters
     {
         return health;
     }
-    characters::EnumAttributes PlayerCharacterClass::GetKeyAttribute() const {
-        return keyAttribute;
-    }
 
-    characters::AttributeBoost PlayerCharacterClass::GetBoost() const {
-        characters::AttributeBoost classBoost(name, {{
-            keyAttribute, true
-        }},{{}});
+    characters::AttributeBoost PlayerCharacterClass::GetBoost() const
+    {
+        characters::AttributeBoost classBoost(name, {{keyAttribute, true}}, {{}});
         return classBoost;
     }
 }

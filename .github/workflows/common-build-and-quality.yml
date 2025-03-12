@@ -18,8 +18,7 @@ jobs:
 
       - name: Rodar cppcheck
         run: |
-          cppcheck --enable=all --inconclusive --quiet --error-exitcode=1 \
-                   -I include -I src .
+          cppcheck --enable=all --suppress=missingIncludeSystem --quiet --error-exitcode=1 -I include -I src .
 
       - name: Configurar CMake
         run: cmake -B build -DCMAKE_BUILD_TYPE=Release

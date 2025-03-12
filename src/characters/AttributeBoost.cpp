@@ -1,32 +1,22 @@
 #include <iostream>
+#include <algorithm>
 #include "characters/AttributeBoost.h"
 
 namespace characters
 {
     AttributeBoost::AttributeBoost(
         std::string source,
-        std::map<characters::EnumAttributes, bool> boost,
-        std::map<characters::EnumAttributes, bool> flaw) : source(source), boost(boost), flaw(flaw) {}
+        std::map<characters::EnumAttributes, bool> const boost,
+        std::map<characters::EnumAttributes, bool> const flaw) : source(source), boost(boost), flaw(flaw) {}
 
     int AttributeBoost::CountAttributeInBoost(characters::EnumAttributes attr) const
     {
+        const int countBoost = std::count_if(boost.begin(), boost.end(), [attr](std::pair<characters::EnumAttributes, bool> const &pair)
+                                             { return pair.first == attr && pair.second; });
 
-        int count = 0;
-        for (const auto &pair : boost)
-        {
-            if (pair.first == attr && pair.second)
-            {
-                count++;
-            }
-        }
+        const int countFlaw = std::count_if(flaw.begin(), flaw.end(), [attr](std::pair<characters::EnumAttributes, bool> const &pair)
+                                            { return pair.first == attr && pair.second; });
 
-        for (const auto &pair : flaw)
-        {
-            if (pair.first == attr && pair.second)
-            {
-                count--;
-            }
-        }
-        return count;
+        return countBoost - countFlaw;
     }
 }
