@@ -5,36 +5,70 @@
             "label": "Configure CMake",
             "type": "shell",
             "command": "cmake",
-            "args": [".", "-B", "build", "-DCMAKE_BUILD_TYPE=Debug"],
+            "args": [
+                ".",
+                "-B",
+                "build",
+                "-DCMAKE_BUILD_TYPE=Debug"
+            ],
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
             "problemMatcher": [],
-            "detail": "Configura o projeto com CMake"
+            "detail": "Configure the project with CMake"
         },
         {
             "label": "Build Project",
             "type": "shell",
             "command": "cmake",
-            "args": ["--build", "build"],
+            "args": [
+                "--build",
+                "build"
+            ],
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
             "problemMatcher": [],
-            "detail": "Compila o projeto"
+            "detail": "Compile the project"
         },
         {
             "label": "Build All",
             "dependsOrder": "sequence",
-            "dependsOn": ["Configure CMake", "Build Project"],
+            "dependsOn": [
+                "Configure CMake",
+                "Build Project"
+            ],
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
             "problemMatcher": [],
-            "detail": "Configura e compila o projeto"
+            "detail": "Configure and compile the project"
+        },
+        {
+            "label": "Lint Check",
+            "detail": "Check for lint errors",
+            "type": "shell",
+            "command": "cppcheck",
+            "args": [
+                "--enable=all",
+                "--suppress=missingIncludeSystem",
+                "--quiet",
+                "--error-exitcode=1",
+                "-I",
+                "include",
+                "-I",
+                "src",
+                "-i",
+                "build",
+                "."
+            ],
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "silent"
+            }
         }
     ]
 }
