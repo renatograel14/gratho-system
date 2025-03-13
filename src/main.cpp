@@ -23,21 +23,30 @@ int main()
     characters::PlayerCharacterAncestry human("Human", 8, humanBoost);
 
     characters::AttributeBoost firstLevelBoost("Level 1", {
-        {characters::EnumAttributes::Strength, true},
-        {characters::EnumAttributes::Constitution, true},
-        {characters::EnumAttributes::Intelligence, true},
-        {characters::EnumAttributes::Dexterity, true},
-    }, {});
+                                                              {characters::EnumAttributes::Strength, true},
+                                                              {characters::EnumAttributes::Constitution, true},
+                                                              {characters::EnumAttributes::Intelligence, true},
+                                                              {characters::EnumAttributes::Dexterity, true},
+                                                          },
+                                               {});
     characters::PlayerCharacterSheet playerCharacterFighter("José", human, fighter, firstLevelBoost);
 
     characters::AttributeBoost fifthLevelBoost("Level 5", {
-        {characters::EnumAttributes::Strength, true},
-        {characters::EnumAttributes::Constitution, true},
-        {characters::EnumAttributes::Intelligence, true},
-        {characters::EnumAttributes::Dexterity, true},
-    }, {});
+                                                              {characters::EnumAttributes::Strength, true},
+                                                              {characters::EnumAttributes::Constitution, true},
+                                                              {characters::EnumAttributes::Intelligence, true},
+                                                              {characters::EnumAttributes::Dexterity, true},
+                                                          },
+                                               {});
     playerCharacterFighter.AddLevelBoost(fifthLevelBoost);
 
+    characters::Skill skill("Level 1", "Athlectics", characters::EnumAttributes::Strength, characters::EnumProficiencies::Trained);
+    playerCharacterFighter.AddSkill(skill);
+
+    skill.SetSkillRank(characters::EnumProficiencies::Expert);
+
+    std::cout
+        << playerCharacterFighter.GetSkill("Name").GetSkillName();
     std::cout << std::endl;
     std::cout << std::endl;
     std::cout << "Name: " << playerCharacterFighter.GetName() << std::endl;

@@ -2,6 +2,8 @@
 #include <cmath>
 #include <iostream>
 #include <iomanip>
+#include <algorithm>
+#include <stdexcept>
 
 namespace characters
 {
@@ -13,6 +15,7 @@ namespace characters
         : name(name), ancestry(ancestry), playerClass(playerClass), levelBoosts({firstLevelBoost})
     {
         CalculateAttributes();
+        SetSkills();
     }
 
     const std::string &PlayerCharacterSheet::GetName() const
@@ -111,5 +114,30 @@ namespace characters
             double value = 4 + (boostCount - 4) * 0.5;
             return static_cast<int>(std::floor(value));
         }
+    }
+
+    void PlayerCharacterSheet::SetSkills()
+    {
+        AddSkill(Skill("Creation",
+                       "Name",
+                       characters::EnumAttributes::Strength,
+                       characters::EnumProficiencies::Untrained));
+    }
+
+    void PlayerCharacterSheet::AddSkill(const Skill &newSkill)
+    {
+        skills.push_back(newSkill);
+    }
+
+    characters::Skill PlayerCharacterSheet::GetSkill(const std::string &skillName) const
+    {
+        auto it = std::find_if(skills.begin(), skills.end(), [&skillName](const characters::Skill &obj)
+                               { return obj.GetSkillName() == skillName; });
+        if (it != skills.end())
+        {
+            auto index = std::distance(skills.begin(), it);
+            return skills.at(index);
+        }
+        throw std::invalid_argument("Skillname not found in this sheet" + skillName);
     }
 }

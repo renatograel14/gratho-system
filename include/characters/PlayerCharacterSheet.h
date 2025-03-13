@@ -8,6 +8,7 @@
 #include "characters/PlayerCharacterClass.h"
 #include "characters/PlayerCharacterAncestry.h"
 #include "characters/EnumAttributes.h"
+#include "characters/Skill.h"
 
 namespace characters
 {
@@ -26,6 +27,8 @@ namespace characters
         void AddLevelBoost(const AttributeBoost &newLevelBoost);
         void PrintAllAtttributes() const;
         std::vector<characters::AttributeBoost> GetAllAttributeBoosts() const;
+        void AddSkill(const Skill &newSkill);
+        Skill GetSkill(const std::string &skillName) const;
 
     private:
         std::string name;
@@ -34,9 +37,11 @@ namespace characters
         std::vector<AttributeBoost> levelBoosts;
         std::map<characters::EnumAttributes, int> attributes;
         std::map<characters::EnumAttributes, int> AccumulateBoosts() const;
+        std::vector<characters::Skill> skills;
 
         int CalculateAttributeValue(int boostCount) const;
         void CalculateAttributes();
+        void SetSkills();
     };
 }
 
