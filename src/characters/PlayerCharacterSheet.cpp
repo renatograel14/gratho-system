@@ -10,10 +10,8 @@ namespace characters
 {
     PlayerCharacterSheet::PlayerCharacterSheet(
         std::string name,
-        PlayerCharacterAncestry &ancestry,
-        PlayerCharacterClass &playerClass,
         AttributeBoost firstLevelBoost)
-        : name(name), ancestry(ancestry), playerClass(playerClass), levelBoosts({firstLevelBoost})
+        : name(name), levelBoosts({firstLevelBoost})
     {
         ConsolidateBoosts();
         CalculateAttributes();
@@ -94,12 +92,7 @@ namespace characters
 
     void PlayerCharacterSheet::ConsolidateBoosts()
     {
-        const AttributeBoost &ancestryBoost = ancestry.GetBoost();
-        const AttributeBoost &playerClassBoost = playerClass.GetBoost();
-
         boosts.clear();
-        boosts.push_back(ancestryBoost);
-        boosts.push_back(playerClassBoost);
         boosts.insert(boosts.end(), levelBoosts.begin(), levelBoosts.end());
     }
 
@@ -156,6 +149,6 @@ namespace characters
     void PlayerCharacterSheet::CalculateTotalHealth()
     {
         const int &constitution = GetAttribute(EnumAttributes::Constitution);
-        totalHealth = ancestry.GetHealth() + playerClass.GetHealth() + constitution;
+        totalHealth = constitution;
     }
 }
