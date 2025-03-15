@@ -14,8 +14,15 @@ namespace characters
         AttributeBoost firstLevelBoost)
         : name(name), ancestry(ancestry), playerClass(playerClass), levelBoosts({firstLevelBoost})
     {
+        ConsolidateBoosts();
         CalculateAttributes();
-        SetSkills();
+        InitializeDefaultSkills();
+        CalculateTotalHealth();
+    }
+
+    const std::vector<AttributeBoost> &PlayerCharacterSheet::GetBoosts() const
+    {
+        return boosts;
     }
 
     const std::string &PlayerCharacterSheet::GetName() const
@@ -23,7 +30,7 @@ namespace characters
         return name;
     }
 
-    int PlayerCharacterSheet::GetAttribute(characters::EnumAttributes attr) const
+    const int PlayerCharacterSheet::GetAttribute(characters::EnumAttributes attr) const
     {
         try
         {
@@ -35,19 +42,81 @@ namespace characters
         }
     }
 
-    int PlayerCharacterSheet::GetHealth() const
+    const int &PlayerCharacterSheet::GetTotalHealth() const
     {
-        int constitution = GetAttribute(characters::EnumAttributes::Constitution);
-        return ancestry.GetHealth() + playerClass.GetHealth() + constitution;
+        return totalHealth;
     }
 
-    std::vector<characters::AttributeBoost> PlayerCharacterSheet::GetAllAttributeBoosts() const
+    void PlayerCharacterSheet::AddLevelBoost(const AttributeBoost &newLevelBoost)
+    {
+        levelBoosts.push_back(newLevelBoost);
+        CalculateAttributes();
+    }
+
+    void PlayerCharacterSheet::PrintAllAttributes() const
+    {
+        std::cout << "Attributes" << std::endl;
+        for (const auto pair : attributes)
+        {
+            std::string attrName = EnumAttributesToString.at(pair.first);
+            std::cout << attrName << ": " << std::setw(15 - attrName.length()) << std::right << pair.second << std::endl;
+        }
+    }
+
+    const characters::Skill &PlayerCharacterSheet::GetSkill(const std::string &skillName) const
+    {
+        auto it = std::find_if(skills.begin(), skills.end(), [&skillName](const characters::Skill &obj)
+                               { return obj.GetSkillName() == skillName; });
+        if (it != skills.end())
+        {
+            auto index = std::distance(skills.begin(), it);
+            return skills.at(index);
+        }
+        throw std::invalid_argument("Skillname not found in this sheet" + skillName);
+    }
+
+    void PlayerCharacterSheet::AddSkill(const Skill &newSkill)
+    {
+        skills.push_back(newSkill);
+    }
+
+    // PRIVATE METHODS
+
+    void PlayerCharacterSheet::InitializeDefaultSkills()
+    {
+        // SHOULD BE ADD FOR ALL DEFAULT SKILLS
+        AddSkill(Skill("Creation",
+                       "Athletics",
+                       characters::EnumAttributes::Strength,
+                       characters::EnumProficiencies::Untrained));
+        AddSkill(Skill("Creation",
+                       "Acrobatics",
+                       characters::EnumAttributes::Dexterity,
+                       characters::EnumProficiencies::Untrained));
+    }
+
+    void PlayerCharacterSheet::ConsolidateBoosts()
     {
         const AttributeBoost &ancestryBoost = ancestry.GetBoost();
         const AttributeBoost &playerClassBoost = playerClass.GetBoost();
-        std::vector<characters::AttributeBoost> boosts({ancestryBoost, playerClassBoost});
+
+        boosts.clear();
+        boosts.push_back(ancestryBoost);
+        boosts.push_back(playerClassBoost);
         boosts.insert(boosts.end(), levelBoosts.begin(), levelBoosts.end());
-        return boosts;
+    }
+
+    int PlayerCharacterSheet::CalculateAttributeValue(int boostCount) const
+    {
+        if (boostCount <= 4)
+        {
+            return boostCount;
+        }
+        else
+        {
+            double value = 4 + (boostCount - 4) * 0.5;
+            return static_cast<int>(std::floor(value));
+        }
     }
 
     std::map<characters::EnumAttributes, int> PlayerCharacterSheet::AccumulateBoosts() const
@@ -60,7 +129,7 @@ namespace characters
             totalBoosts[static_cast<EnumAttributes>(i)] = 0;
         }
 
-        for (const auto &boost : GetAllAttributeBoosts())
+        for (const auto &boost : GetBoosts())
         {
             for (int i = 0; i < 6; ++i)
             {
@@ -70,22 +139,6 @@ namespace characters
         }
 
         return totalBoosts;
-    }
-
-    void PlayerCharacterSheet::AddLevelBoost(const AttributeBoost &newLevelBoost)
-    {
-        levelBoosts.push_back(newLevelBoost);
-        CalculateAttributes();
-    }
-
-    void PlayerCharacterSheet::PrintAllAtttributes() const
-    {
-        std::cout << "Attributes" << std::endl;
-        for (const auto pair : attributes)
-        {
-            std::string attrName = EnumAttributesToString.at(pair.first);
-            std::cout << attrName << ": " << std::setw(15 - attrName.length()) << std::right << pair.second << std::endl;
-        }
     }
 
     void PlayerCharacterSheet::CalculateAttributes()
@@ -103,41 +156,9 @@ namespace characters
         }
     }
 
-    int PlayerCharacterSheet::CalculateAttributeValue(int boostCount) const
+    void PlayerCharacterSheet::CalculateTotalHealth()
     {
-        if (boostCount <= 4)
-        {
-            return boostCount;
-        }
-        else
-        {
-            double value = 4 + (boostCount - 4) * 0.5;
-            return static_cast<int>(std::floor(value));
-        }
-    }
-
-    void PlayerCharacterSheet::SetSkills()
-    {
-        AddSkill(Skill("Creation",
-                       "Name",
-                       characters::EnumAttributes::Strength,
-                       characters::EnumProficiencies::Untrained));
-    }
-
-    void PlayerCharacterSheet::AddSkill(const Skill &newSkill)
-    {
-        skills.push_back(newSkill);
-    }
-
-    characters::Skill PlayerCharacterSheet::GetSkill(const std::string &skillName) const
-    {
-        auto it = std::find_if(skills.begin(), skills.end(), [&skillName](const characters::Skill &obj)
-                               { return obj.GetSkillName() == skillName; });
-        if (it != skills.end())
-        {
-            auto index = std::distance(skills.begin(), it);
-            return skills.at(index);
-        }
-        throw std::invalid_argument("Skillname not found in this sheet" + skillName);
+        const int &constitution = GetAttribute(characters::EnumAttributes::Constitution);
+        totalHealth = ancestry.GetHealth() + playerClass.GetHealth() + constitution;
     }
 }

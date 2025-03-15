@@ -11,12 +11,13 @@ namespace characters
     public:
         PlayerCharacterClass(std::string name, int health, characters::EnumAttributes keyAttribute);
         int GetHealth() const;
-        characters::AttributeBoost GetBoost() const;
+        const characters::AttributeBoost &GetBoost() const;
 
     private:
         std::string name;
         int health;
         characters::EnumAttributes keyAttribute;
+        characters::AttributeBoost classBoost;
     };
 
 }

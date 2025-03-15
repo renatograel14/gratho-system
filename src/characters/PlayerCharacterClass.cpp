@@ -9,15 +9,14 @@ namespace characters
         std::string name,
         int health,
         characters::EnumAttributes keyAttribute)
-        : name(name), health(health), keyAttribute(keyAttribute) {}
+        : name(name), health(health), keyAttribute(keyAttribute), classBoost(name, {{keyAttribute, true}}, {{}}) {}
     int PlayerCharacterClass::GetHealth() const
     {
         return health;
     }
 
-    characters::AttributeBoost PlayerCharacterClass::GetBoost() const
+    const characters::AttributeBoost &PlayerCharacterClass::GetBoost() const
     {
-        characters::AttributeBoost classBoost(name, {{keyAttribute, true}}, {{}});
         return classBoost;
     }
 }

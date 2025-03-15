@@ -45,8 +45,6 @@ int main()
     playerCharacterFighter.AddLevelBoost(fifthLevelBoost);
 
     characters::Skill skill("Level 1", "Athlectics", characters::EnumAttributes::Strength, characters::EnumProficiencies::Trained);
-    playerCharacterFighter.AddSkill(skill);
-
     skill.SetSkillRank(characters::EnumProficiencies::Expert);
 
     std::cout
@@ -54,8 +52,8 @@ int main()
     std::cout << std::endl;
     std::cout << std::endl;
     std::cout << "Name: " << playerCharacterFighter.GetName() << std::endl;
-    std::cout << "Health Points: " << playerCharacterFighter.GetHealth() << std::endl;
-    playerCharacterFighter.PrintAllAtttributes();
+    std::cout << "Health Points: " << playerCharacterFighter.GetTotalHealth() << std::endl;
+    playerCharacterFighter.PrintAllAttributes();
     std::cout << std::endl;
     std::cout << std::endl;
     return 0;
