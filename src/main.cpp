@@ -1,60 +1,96 @@
 #include <iostream>
+#include <vector>
 #include "characters/PlayerCharacterClass.h"
 #include "characters/PlayerCharacterAncestry.h"
 #include "characters/PlayerCharacterSheet.h"
 #include "characters/AttributeBoost.h"
 #include "characters/EnumAttributes.h"
+#include "characters/PlayerCharacterVisitor.h"
+
+class FighterVisitor : public characters::PlayerCharacterVisitor
+{
+private:
+    std::vector<std::string> skillChoices;
+
+public:
+    explicit FighterVisitor(std::vector<std::string> &skillChoices) : skillChoices(skillChoices) {}
+    void visit(characters::PlayerCharacterSheet &sheet) const override
+    {
+
+        // validar se Acrobatics ou Athletics estão presentes nas escolhas
+        if (skillChoices.size() != 5)
+        {
+            throw std::invalid_argument("");
+        }
+
+        for (const auto &skill : skillChoices)
+        {
+            sheet.SetSkillRank(skill, characters::EnumProficiencies::Trained);
+        }
+
+        sheet.AddBoost(characters::AttributeBoost("Fighter", {{characters::EnumAttributes::Strength, true}}, {}));
+
+        sheet.SetPlayerClass(characters::PlayerCharacterClass("Fighter", 10, characters::EnumAttributes::Strength));
+        std::cout
+            << sheet.GetName() << ": Now, I'm a fighter class" << std::endl;
+    }
+};
+
+class HumanVisitor : public characters::PlayerCharacterVisitor
+{
+private:
+    std::map<characters::EnumAttributes, bool> boostChoices;
+    std::map<characters::EnumAttributes, bool> flawChoices;
+
+public:
+    HumanVisitor(
+        std::map<characters::EnumAttributes, bool> &boostChoices,
+        std::map<characters::EnumAttributes, bool> &flawChoices) : boostChoices(boostChoices), flawChoices(flawChoices) {}
+
+    void visit(characters::PlayerCharacterSheet &sheet) const override
+    {
+        sheet.SetAncestry(characters::PlayerCharacterAncestry("Human", 8));
+
+        if (boostChoices.size() == 3 && flawChoices.size() != 1)
+        {
+            throw std::invalid_argument("");
+        }
+
+        sheet.AddBoost(characters::AttributeBoost("Human", boostChoices, flawChoices));
+        std::cout << sheet.GetName() << ": Now, I'm a human ancestry" << std::endl;
+    }
+};
 
 int main()
 {
-    std::cout << "Running..." << std::endl;
+    using namespace characters;
+    using namespace std;
+    cout << "Running..." << endl;
 
-    characters::PlayerCharacterClass fighter("Fighter", 10, characters::EnumAttributes::Strength);
+    PlayerCharacterSheet playerCharacterFighter("José");
 
-    std::map<characters::EnumAttributes, bool> boost = {
-        {characters::EnumAttributes::Strength, true},
-        {characters::EnumAttributes::Constitution, true},
-        {characters::EnumAttributes::Dexterity, true},
+    map<EnumAttributes, bool> humanBoostChoices = {
+        {EnumAttributes::Strength, true},
+        {EnumAttributes::Constitution, true},
+        {EnumAttributes::Dexterity, true},
     };
-    std::map<characters::EnumAttributes, bool> flaw = {
-        {characters::EnumAttributes::Intelligence, true},
-    };
-    characters::AttributeBoost humanBoost("Human", boost, flaw);
-    characters::PlayerCharacterAncestry human("Human", 8, humanBoost);
 
-    characters::AttributeBoost firstLevelBoost(
-        "Level 1",
-        {
-            {characters::EnumAttributes::Strength, true},
-            {characters::EnumAttributes::Constitution, true},
-            {characters::EnumAttributes::Intelligence, true},
-            {characters::EnumAttributes::Dexterity, true},
-        },
-        {});
-    characters::PlayerCharacterSheet playerCharacterFighter("José", human, fighter, firstLevelBoost);
+    map<EnumAttributes, bool> humanFlawChoices = {
+        {{EnumAttributes::Intelligence, true}}};
 
-    characters::AttributeBoost fifthLevelBoost(
-        "Level 5",
-        {
-            {characters::EnumAttributes::Strength, true},
-            {characters::EnumAttributes::Constitution, true},
-            {characters::EnumAttributes::Intelligence, true},
-            {characters::EnumAttributes::Dexterity, true},
-        },
-        {});
-    playerCharacterFighter.AddLevelBoost(fifthLevelBoost);
+    playerCharacterFighter.AcceptCharacterVisitor(
+        HumanVisitor(humanBoostChoices, humanFlawChoices));
 
-    characters::Skill skill("Level 1", "Athlectics", characters::EnumAttributes::Strength, characters::EnumProficiencies::Trained);
-    skill.SetSkillRank(characters::EnumProficiencies::Expert);
+    vector<string> fighterSkillChoices = {"Athletics", "Acrobatics", "Deception", "Intimidation", "Stealth"};
 
-    std::cout
-        << playerCharacterFighter.GetSkill("Athletics").GetSkillName();
-    std::cout << std::endl;
-    std::cout << std::endl;
-    std::cout << "Name: " << playerCharacterFighter.GetName() << std::endl;
-    std::cout << "Health Points: " << playerCharacterFighter.GetTotalHealth() << std::endl;
+    playerCharacterFighter.AcceptCharacterVisitor(FighterVisitor(fighterSkillChoices));
+
+    cout << endl;
+    cout << endl;
+    cout << "Name: " << playerCharacterFighter.GetName() << endl;
+    cout << "Health Points: " << playerCharacterFighter.GetTotalHealth() << endl;
     playerCharacterFighter.PrintAllAttributes();
-    std::cout << std::endl;
-    std::cout << std::endl;
+    cout << endl;
+    cout << endl;
     return 0;
 }

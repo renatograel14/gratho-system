@@ -12,29 +12,40 @@
 
 namespace characters
 {
+    class PlayerCharacterVisitor;
     class PlayerCharacterSheet
     {
     public:
-        PlayerCharacterSheet(
-            std::string name,
-            PlayerCharacterAncestry &ancestry,
-            PlayerCharacterClass &playerClass,
-            AttributeBoost firstLevelBoost);
+        explicit PlayerCharacterSheet(std::string name);
 
         const std::string &GetName() const;
         const int GetAttribute(EnumAttributes attr) const;
         const int &GetTotalHealth() const;
-        void AddLevelBoost(const AttributeBoost &newLevelBoost);
-        void PrintAllAttributes() const;
+
+        const PlayerCharacterClass &GetPlayerClass() const;
+        void SetPlayerClass(const PlayerCharacterClass &newPlayerClass);
+
+        const PlayerCharacterAncestry &GetAncestry() const;
+        void SetAncestry(const PlayerCharacterAncestry &newAncestry);
+
+        void AcceptCharacterVisitor(const PlayerCharacterVisitor &visitor);
+
         const std::vector<AttributeBoost> &GetBoosts() const;
+        void AddBoost(const AttributeBoost &newLevelBoost);
+
         void AddSkill(const Skill &newSkill);
-        const Skill &GetSkill(const std::string &skillName) const;
+        void SetSkillRank(const std::string &skillName, EnumProficiencies proficiency);
+        Skill &GetSkill(const std::string &skillName);
+
+        void CalculateTotalHealth();
+
+        void PrintAllAttributes() const;
 
     private:
-        std::string name;
-        PlayerCharacterAncestry ancestry;
         PlayerCharacterClass playerClass;
-        std::vector<AttributeBoost> levelBoosts;
+        PlayerCharacterAncestry ancestry;
+
+        std::string name;
         std::map<EnumAttributes, int> attributes;
         std::vector<Skill> skills;
         std::vector<AttributeBoost> boosts;
@@ -44,8 +55,6 @@ namespace characters
         int CalculateAttributeValue(int boostCount) const;
         void CalculateAttributes();
         void InitializeDefaultSkills();
-        void ConsolidateBoosts();
-        void CalculateTotalHealth();
     };
 }
 

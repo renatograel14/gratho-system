@@ -1,5 +1,6 @@
 #include "characters/PlayerCharacterSheet.h"
 #include "characters/DefaultSkills.h"
+#include "characters/PlayerCharacterVisitor.h"
 #include <cmath>
 #include <iostream>
 #include <iomanip>
@@ -8,17 +9,32 @@
 
 namespace characters
 {
-    PlayerCharacterSheet::PlayerCharacterSheet(
-        std::string name,
-        PlayerCharacterAncestry &ancestry,
-        PlayerCharacterClass &playerClass,
-        AttributeBoost firstLevelBoost)
-        : name(name), ancestry(ancestry), playerClass(playerClass), levelBoosts({firstLevelBoost})
+    PlayerCharacterSheet::PlayerCharacterSheet(std::string name)
+        : name(name),
+          boosts({}),
+          ancestry(PlayerCharacterAncestry("No Acestry", 0)),
+          playerClass(PlayerCharacterClass("No Class", 0, EnumAttributes::Strength))
     {
-        ConsolidateBoosts();
         CalculateAttributes();
         InitializeDefaultSkills();
         CalculateTotalHealth();
+    }
+
+    void PlayerCharacterSheet::SetPlayerClass(const PlayerCharacterClass &newPlayerClass)
+    {
+        playerClass = newPlayerClass;
+        CalculateTotalHealth();
+    }
+
+    void PlayerCharacterSheet::SetAncestry(const PlayerCharacterAncestry &newAncestry)
+    {
+        ancestry = newAncestry;
+        CalculateTotalHealth();
+    }
+
+    void PlayerCharacterSheet::AcceptCharacterVisitor(const PlayerCharacterVisitor &visitor)
+    {
+        visitor.visit(*this);
     }
 
     const std::vector<AttributeBoost> &PlayerCharacterSheet::GetBoosts() const
@@ -48,10 +64,9 @@ namespace characters
         return totalHealth;
     }
 
-    void PlayerCharacterSheet::AddLevelBoost(const AttributeBoost &newLevelBoost)
+    void PlayerCharacterSheet::AddBoost(const AttributeBoost &newLevelBoost)
     {
-        levelBoosts.push_back(newLevelBoost);
-        ConsolidateBoosts();
+        boosts.push_back(newLevelBoost);
         CalculateAttributes();
     }
 
@@ -65,7 +80,7 @@ namespace characters
         }
     }
 
-    const Skill &PlayerCharacterSheet::GetSkill(const std::string &skillName) const
+    Skill &PlayerCharacterSheet::GetSkill(const std::string &skillName)
     {
         auto it = std::find_if(skills.begin(), skills.end(), [&skillName](const Skill &obj)
                                { return obj.GetSkillName() == skillName; });
@@ -82,6 +97,12 @@ namespace characters
         skills.push_back(newSkill);
     }
 
+    void PlayerCharacterSheet::SetSkillRank(const std::string &skillName, EnumProficiencies proficiency)
+    {
+        Skill &skill = GetSkill(skillName);
+        skill.SetSkillRank(proficiency);
+    }
+
     // PRIVATE METHODS
 
     void PlayerCharacterSheet::InitializeDefaultSkills()
@@ -90,17 +111,6 @@ namespace characters
         {
             AddSkill(skill);
         }
-    }
-
-    void PlayerCharacterSheet::ConsolidateBoosts()
-    {
-        const AttributeBoost &ancestryBoost = ancestry.GetBoost();
-        const AttributeBoost &playerClassBoost = playerClass.GetBoost();
-
-        boosts.clear();
-        boosts.push_back(ancestryBoost);
-        boosts.push_back(playerClassBoost);
-        boosts.insert(boosts.end(), levelBoosts.begin(), levelBoosts.end());
     }
 
     int PlayerCharacterSheet::CalculateAttributeValue(int boostCount) const
