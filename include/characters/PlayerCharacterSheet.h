@@ -34,7 +34,8 @@ namespace characters
         void AddBoost(const AttributeBoost &newLevelBoost);
 
         void AddSkill(const Skill &newSkill);
-        const Skill &GetSkill(const std::string &skillName) const;
+        void SetSkillRank(const std::string skillName, EnumProficiencies proficiency);
+        Skill &GetSkill(const std::string &skillName);
 
         void CalculateTotalHealth();
 

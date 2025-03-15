@@ -28,6 +28,7 @@ namespace characters
     void PlayerCharacterSheet::SetPlayerClass(PlayerCharacterClass newPlayerClass)
     {
         playerClass = newPlayerClass;
+        CalculateTotalHealth();
     }
 
     const PlayerCharacterAncestry &PlayerCharacterSheet::GetAncestry() const
@@ -38,6 +39,7 @@ namespace characters
     void PlayerCharacterSheet::SetAncestry(PlayerCharacterAncestry newAncestry)
     {
         ancestry = newAncestry;
+        CalculateTotalHealth();
     }
 
     void PlayerCharacterSheet::AcceptCharacterVisitor(const PlayerCharacterVisitor &visitor)
@@ -88,7 +90,7 @@ namespace characters
         }
     }
 
-    const Skill &PlayerCharacterSheet::GetSkill(const std::string &skillName) const
+    Skill &PlayerCharacterSheet::GetSkill(const std::string &skillName)
     {
         auto it = std::find_if(skills.begin(), skills.end(), [&skillName](const Skill &obj)
                                { return obj.GetSkillName() == skillName; });
@@ -103,6 +105,12 @@ namespace characters
     void PlayerCharacterSheet::AddSkill(const Skill &newSkill)
     {
         skills.push_back(newSkill);
+    }
+
+    void PlayerCharacterSheet::SetSkillRank(std::string skillName, EnumProficiencies proficiency)
+    {
+        Skill &skill = GetSkill(skillName);
+        skill.SetSkillRank(proficiency);
     }
 
     // PRIVATE METHODS

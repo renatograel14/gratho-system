@@ -10,18 +10,29 @@
 class FighterVisitor : public characters::PlayerCharacterVisitor
 {
 private:
-    std::vector<characters::Skill> skillChoices;
+    std::vector<std::string> skillChoices;
 
 public:
-    FighterVisitor(std::vector<characters::Skill> skillChoices) : skillChoices(skillChoices) {}
+    FighterVisitor(std::vector<std::string> skillChoices) : skillChoices(skillChoices) {}
     void visit(characters::PlayerCharacterSheet &sheet) const override
     {
 
-        for (const auto &skill : skillChoices)
+        // validar se Acrobatics ou Athletics estão presentes nas escolhas
+        if (skillChoices.size() != 5)
         {
+            throw std::invalid_argument("");
         }
 
-        std::cout << sheet.GetName() << ": Now, I'm a fighter class" << std::endl;
+        for (const auto &skill : skillChoices)
+        {
+            sheet.SetSkillRank(skill, characters::EnumProficiencies::Trained);
+        }
+
+        sheet.AddBoost(characters::AttributeBoost("Fighter", {{characters::EnumAttributes::Strength, true}}, {}));
+
+        sheet.SetPlayerClass(characters::PlayerCharacterClass("Fighter", 10, characters::EnumAttributes::Strength));
+        std::cout
+            << sheet.GetName() << ": Now, I'm a fighter class" << std::endl;
     }
 };
 
@@ -42,7 +53,7 @@ public:
 
         if (boostChoices.size() == 3 && flawChoices.size() != 1)
         {
-            throw 'invalid boost';
+            throw std::invalid_argument("");
         }
 
         sheet.AddBoost(characters::AttributeBoost("Human", boostChoices, flawChoices));
@@ -57,8 +68,14 @@ int main()
     cout << "Running..." << endl;
 
     PlayerCharacterSheet playerCharacterFighter("José");
-    playerCharacterFighter.AcceptCharacterVisitor(HumanVisitor({}, {}));
-    playerCharacterFighter.AcceptCharacterVisitor(FighterVisitor({}));
+    playerCharacterFighter.AcceptCharacterVisitor(
+        HumanVisitor({
+                         {EnumAttributes::Strength, true},
+                         {EnumAttributes::Constitution, true},
+                         {EnumAttributes::Dexterity, true},
+                     },
+                     {{EnumAttributes::Intelligence, true}}));
+    playerCharacterFighter.AcceptCharacterVisitor(FighterVisitor({"Athletics", "Acrobatics", "Deception", "Intimidation", "Stealth"}));
 
     cout << endl;
     cout << endl;
