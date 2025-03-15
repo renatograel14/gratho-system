@@ -51,6 +51,7 @@ namespace characters
     void PlayerCharacterSheet::AddLevelBoost(const AttributeBoost &newLevelBoost)
     {
         levelBoosts.push_back(newLevelBoost);
+        ConsolidateBoosts();
         CalculateAttributes();
     }
 

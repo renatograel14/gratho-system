@@ -48,7 +48,7 @@ int main()
     skill.SetSkillRank(characters::EnumProficiencies::Expert);
 
     std::cout
-        << playerCharacterFighter.GetSkill("Name").GetSkillName();
+        << playerCharacterFighter.GetSkill("Athletics").GetSkillName();
     std::cout << std::endl;
     std::cout << std::endl;
     std::cout << "Name: " << playerCharacterFighter.GetName() << std::endl;
