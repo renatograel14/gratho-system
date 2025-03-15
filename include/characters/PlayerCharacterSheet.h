@@ -9,34 +9,36 @@
 #include "characters/PlayerCharacterAncestry.h"
 #include "characters/EnumAttributes.h"
 #include "characters/Skill.h"
-#include "characters/CharacterVisitor.h"
 
 namespace characters
 {
+    class PlayerCharacterVisitor;
     class PlayerCharacterSheet
     {
     public:
-        PlayerCharacterSheet(
-            std::string name,
-            AttributeBoost firstLevelBoost);
+        explicit PlayerCharacterSheet(std::string name);
 
         const std::string &GetName() const;
         const int GetAttribute(EnumAttributes attr) const;
         const int &GetTotalHealth() const;
 
-        void acceptCharacterVisitor(const CharacterVisitor &visitor);
+        void AcceptCharacterVisitor(const PlayerCharacterVisitor &visitor);
 
         const std::vector<AttributeBoost> &GetBoosts() const;
-        void AddLevelBoost(const AttributeBoost &newLevelBoost);
+        void AddBoost(const AttributeBoost &newLevelBoost);
 
         void AddSkill(const Skill &newSkill);
         const Skill &GetSkill(const std::string &skillName) const;
 
+        void CalculateTotalHealth();
+
         void PrintAllAttributes() const;
 
     private:
+        PlayerCharacterClass playerClass;
+        PlayerCharacterAncestry ancestry;
+
         std::string name;
-        std::vector<AttributeBoost> levelBoosts;
         std::map<EnumAttributes, int> attributes;
         std::vector<Skill> skills;
         std::vector<AttributeBoost> boosts;
@@ -46,8 +48,6 @@ namespace characters
         int CalculateAttributeValue(int boostCount) const;
         void CalculateAttributes();
         void InitializeDefaultSkills();
-        void ConsolidateBoosts();
-        void CalculateTotalHealth();
     };
 }
 

@@ -1,5 +1,6 @@
 #include "characters/PlayerCharacterSheet.h"
 #include "characters/DefaultSkills.h"
+#include "characters/PlayerCharacterVisitor.h"
 #include <cmath>
 #include <iostream>
 #include <iomanip>
@@ -8,15 +9,20 @@
 
 namespace characters
 {
-    PlayerCharacterSheet::PlayerCharacterSheet(
-        std::string name,
-        AttributeBoost firstLevelBoost)
-        : name(name), levelBoosts({firstLevelBoost})
+    PlayerCharacterSheet::PlayerCharacterSheet(std::string name)
+        : name(name),
+          boosts({}),
+          ancestry(PlayerCharacterAncestry("No Acestry", 0)),
+          playerClass(PlayerCharacterClass("No Class", 0, EnumAttributes::Strength))
     {
-        ConsolidateBoosts();
         CalculateAttributes();
         InitializeDefaultSkills();
         CalculateTotalHealth();
+    }
+
+    void PlayerCharacterSheet::AcceptCharacterVisitor(const PlayerCharacterVisitor &visitor)
+    {
+        visitor.visit(*this);
     }
 
     const std::vector<AttributeBoost> &PlayerCharacterSheet::GetBoosts() const
@@ -46,10 +52,9 @@ namespace characters
         return totalHealth;
     }
 
-    void PlayerCharacterSheet::AddLevelBoost(const AttributeBoost &newLevelBoost)
+    void PlayerCharacterSheet::AddBoost(const AttributeBoost &newLevelBoost)
     {
-        levelBoosts.push_back(newLevelBoost);
-        ConsolidateBoosts();
+        boosts.push_back(newLevelBoost);
         CalculateAttributes();
     }
 
@@ -88,12 +93,6 @@ namespace characters
         {
             AddSkill(skill);
         }
-    }
-
-    void PlayerCharacterSheet::ConsolidateBoosts()
-    {
-        boosts.clear();
-        boosts.insert(boosts.end(), levelBoosts.begin(), levelBoosts.end());
     }
 
     int PlayerCharacterSheet::CalculateAttributeValue(int boostCount) const
@@ -149,6 +148,6 @@ namespace characters
     void PlayerCharacterSheet::CalculateTotalHealth()
     {
         const int &constitution = GetAttribute(EnumAttributes::Constitution);
-        totalHealth = constitution;
+        totalHealth = ancestry.GetHealth() + playerClass.GetHealth() + constitution;
     }
 }
