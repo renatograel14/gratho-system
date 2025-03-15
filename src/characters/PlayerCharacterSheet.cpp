@@ -1,4 +1,5 @@
 #include "characters/PlayerCharacterSheet.h"
+#include "characters/DefaultSkills.h"
 #include <cmath>
 #include <iostream>
 #include <iomanip>
@@ -30,7 +31,7 @@ namespace characters
         return name;
     }
 
-    const int PlayerCharacterSheet::GetAttribute(characters::EnumAttributes attr) const
+    const int PlayerCharacterSheet::GetAttribute(EnumAttributes attr) const
     {
         try
         {
@@ -63,9 +64,9 @@ namespace characters
         }
     }
 
-    const characters::Skill &PlayerCharacterSheet::GetSkill(const std::string &skillName) const
+    const Skill &PlayerCharacterSheet::GetSkill(const std::string &skillName) const
     {
-        auto it = std::find_if(skills.begin(), skills.end(), [&skillName](const characters::Skill &obj)
+        auto it = std::find_if(skills.begin(), skills.end(), [&skillName](const Skill &obj)
                                { return obj.GetSkillName() == skillName; });
         if (it != skills.end())
         {
@@ -84,15 +85,10 @@ namespace characters
 
     void PlayerCharacterSheet::InitializeDefaultSkills()
     {
-        // SHOULD BE ADD FOR ALL DEFAULT SKILLS
-        AddSkill(Skill("Creation",
-                       "Athletics",
-                       characters::EnumAttributes::Strength,
-                       characters::EnumProficiencies::Untrained));
-        AddSkill(Skill("Creation",
-                       "Acrobatics",
-                       characters::EnumAttributes::Dexterity,
-                       characters::EnumProficiencies::Untrained));
+        for (const auto &skill : DefaultSkills())
+        {
+            AddSkill(skill);
+        }
     }
 
     void PlayerCharacterSheet::ConsolidateBoosts()
@@ -119,7 +115,7 @@ namespace characters
         }
     }
 
-    std::map<characters::EnumAttributes, int> PlayerCharacterSheet::AccumulateBoosts() const
+    std::map<EnumAttributes, int> PlayerCharacterSheet::AccumulateBoosts() const
     {
         std::map<EnumAttributes, int> totalBoosts;
 
@@ -158,7 +154,7 @@ namespace characters
 
     void PlayerCharacterSheet::CalculateTotalHealth()
     {
-        const int &constitution = GetAttribute(characters::EnumAttributes::Constitution);
+        const int &constitution = GetAttribute(EnumAttributes::Constitution);
         totalHealth = ancestry.GetHealth() + playerClass.GetHealth() + constitution;
     }
 }
