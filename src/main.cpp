@@ -9,9 +9,18 @@
 
 class FighterVisitor : public characters::PlayerCharacterVisitor
 {
+private:
+    std::vector<characters::Skill> skillChoices;
+    FighterVisitor(std::vector<characters::Skill> skillChoices) : skillChoices(skillChoices) {}
+
 public:
     void visit(characters::PlayerCharacterSheet &sheet) const override
     {
+
+        for (const auto &skill : skillChoices)
+        {
+        }
+
         std::cout << sheet.GetName() << ": Now, I'm a fighter class" << std::endl;
     }
 };
@@ -19,16 +28,24 @@ public:
 class HumanVisitor : public characters::PlayerCharacterVisitor
 {
 private:
-    std::vector<characters::EnumAttributes> boostChoices;
-    std::vector<characters::EnumAttributes> flawChoices;
+    std::map<characters::EnumAttributes, bool> boostChoices;
+    std::map<characters::EnumAttributes, bool> flawChoices;
 
 public:
     HumanVisitor(
-        std::vector<characters::EnumAttributes> boostChoices,
-        std::vector<characters::EnumAttributes> flawChoices) : boostChoices(boostChoices), flawChoices(flawChoices) {}
+        std::map<characters::EnumAttributes, bool> boostChoices,
+        std::map<characters::EnumAttributes, bool> flawChoices) : boostChoices(boostChoices), flawChoices(flawChoices) {}
 
     void visit(characters::PlayerCharacterSheet &sheet) const override
     {
+        sheet.SetAncestry(characters::PlayerCharacterAncestry("Human", 8));
+
+        if (boostChoices.size() == 3 && flawChoices.size() != 1)
+        {
+            throw 'invalid boost';
+        }
+
+        sheet.AddBoost(characters::AttributeBoost("Human", boostChoices, flawChoices));
         std::cout << sheet.GetName() << ": Now, I'm a human ancestry" << std::endl;
     }
 };

@@ -22,6 +22,12 @@ namespace characters
         const int GetAttribute(EnumAttributes attr) const;
         const int &GetTotalHealth() const;
 
+        const PlayerCharacterClass &GetPlayerClass() const;
+        void SetPlayerClass(PlayerCharacterClass newPlayerClass);
+
+        const PlayerCharacterAncestry &GetAncestry() const;
+        void SetAncestry(PlayerCharacterAncestry newAncestry);
+
         void AcceptCharacterVisitor(const PlayerCharacterVisitor &visitor);
 
         const std::vector<AttributeBoost> &GetBoosts() const;

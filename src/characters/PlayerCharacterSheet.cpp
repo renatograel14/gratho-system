@@ -20,6 +20,26 @@ namespace characters
         CalculateTotalHealth();
     }
 
+    const PlayerCharacterClass &PlayerCharacterSheet::GetPlayerClass() const
+    {
+        return playerClass;
+    }
+
+    void PlayerCharacterSheet::SetPlayerClass(PlayerCharacterClass newPlayerClass)
+    {
+        playerClass = newPlayerClass;
+    }
+
+    const PlayerCharacterAncestry &PlayerCharacterSheet::GetAncestry() const
+    {
+        return ancestry;
+    }
+
+    void PlayerCharacterSheet::SetAncestry(PlayerCharacterAncestry newAncestry)
+    {
+        ancestry = newAncestry;
+    }
+
     void PlayerCharacterSheet::AcceptCharacterVisitor(const PlayerCharacterVisitor &visitor)
     {
         visitor.visit(*this);
