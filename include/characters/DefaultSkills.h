@@ -1,7 +1,7 @@
 #ifndef DEFAULT_SKILLS_H
 #define DEFAULT_SKILLS_H
+#include "characters/Skill.h"
 #include <vector>
-#include "characters/Skill.h";
 
 namespace characters
 {
