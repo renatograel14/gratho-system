@@ -11,9 +11,9 @@ class FighterVisitor : public characters::PlayerCharacterVisitor
 {
 private:
     std::vector<characters::Skill> skillChoices;
-    FighterVisitor(std::vector<characters::Skill> skillChoices) : skillChoices(skillChoices) {}
 
 public:
+    FighterVisitor(std::vector<characters::Skill> skillChoices) : skillChoices(skillChoices) {}
     void visit(characters::PlayerCharacterSheet &sheet) const override
     {
 
@@ -58,7 +58,7 @@ int main()
 
     PlayerCharacterSheet playerCharacterFighter("José");
     playerCharacterFighter.AcceptCharacterVisitor(HumanVisitor({}, {}));
-    playerCharacterFighter.AcceptCharacterVisitor(FighterVisitor());
+    playerCharacterFighter.AcceptCharacterVisitor(FighterVisitor({}));
 
     cout << endl;
     cout << endl;
