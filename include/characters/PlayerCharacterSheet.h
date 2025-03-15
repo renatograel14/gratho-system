@@ -22,26 +22,30 @@ namespace characters
             AttributeBoost firstLevelBoost);
 
         const std::string &GetName() const;
-        int GetAttribute(characters::EnumAttributes attr) const;
-        int GetHealth() const;
+        const int GetAttribute(EnumAttributes attr) const;
+        const int &GetTotalHealth() const;
         void AddLevelBoost(const AttributeBoost &newLevelBoost);
-        void PrintAllAtttributes() const;
-        std::vector<characters::AttributeBoost> GetAllAttributeBoosts() const;
+        void PrintAllAttributes() const;
+        const std::vector<AttributeBoost> &GetBoosts() const;
         void AddSkill(const Skill &newSkill);
-        Skill GetSkill(const std::string &skillName) const;
+        const Skill &GetSkill(const std::string &skillName) const;
 
     private:
         std::string name;
-        characters::PlayerCharacterAncestry &ancestry;
-        characters::PlayerCharacterClass &playerClass;
+        PlayerCharacterAncestry &ancestry;
+        PlayerCharacterClass &playerClass;
         std::vector<AttributeBoost> levelBoosts;
-        std::map<characters::EnumAttributes, int> attributes;
-        std::map<characters::EnumAttributes, int> AccumulateBoosts() const;
-        std::vector<characters::Skill> skills;
+        std::map<EnumAttributes, int> attributes;
+        std::vector<Skill> skills;
+        std::vector<AttributeBoost> boosts;
+        int totalHealth;
 
+        std::map<EnumAttributes, int> AccumulateBoosts() const;
         int CalculateAttributeValue(int boostCount) const;
         void CalculateAttributes();
-        void SetSkills();
+        void InitializeDefaultSkills();
+        void ConsolidateBoosts();
+        void CalculateTotalHealth();
     };
 }
 

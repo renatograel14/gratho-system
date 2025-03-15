@@ -9,7 +9,7 @@ namespace characters
         const characters::AttributeBoost &boost)
         : name(name), health(health), boost(boost) {}
 
-    int PlayerCharacterAncestry::GetHealth() const
+    const int &PlayerCharacterAncestry::GetHealth() const
     {
         return health;
     }
