@@ -22,22 +22,26 @@ int main()
     characters::AttributeBoost humanBoost("Human", boost, flaw);
     characters::PlayerCharacterAncestry human("Human", 8, humanBoost);
 
-    characters::AttributeBoost firstLevelBoost("Level 1", {
-                                                              {characters::EnumAttributes::Strength, true},
-                                                              {characters::EnumAttributes::Constitution, true},
-                                                              {characters::EnumAttributes::Intelligence, true},
-                                                              {characters::EnumAttributes::Dexterity, true},
-                                                          },
-                                               {});
+    characters::AttributeBoost firstLevelBoost(
+        "Level 1",
+        {
+            {characters::EnumAttributes::Strength, true},
+            {characters::EnumAttributes::Constitution, true},
+            {characters::EnumAttributes::Intelligence, true},
+            {characters::EnumAttributes::Dexterity, true},
+        },
+        {});
     characters::PlayerCharacterSheet playerCharacterFighter("José", human, fighter, firstLevelBoost);
 
-    characters::AttributeBoost fifthLevelBoost("Level 5", {
-                                                              {characters::EnumAttributes::Strength, true},
-                                                              {characters::EnumAttributes::Constitution, true},
-                                                              {characters::EnumAttributes::Intelligence, true},
-                                                              {characters::EnumAttributes::Dexterity, true},
-                                                          },
-                                               {});
+    characters::AttributeBoost fifthLevelBoost(
+        "Level 5",
+        {
+            {characters::EnumAttributes::Strength, true},
+            {characters::EnumAttributes::Constitution, true},
+            {characters::EnumAttributes::Intelligence, true},
+            {characters::EnumAttributes::Dexterity, true},
+        },
+        {});
     playerCharacterFighter.AddLevelBoost(fifthLevelBoost);
 
     characters::Skill skill("Level 1", "Athlectics", characters::EnumAttributes::Strength, characters::EnumProficiencies::Trained);
