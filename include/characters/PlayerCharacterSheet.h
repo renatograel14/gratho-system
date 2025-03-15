@@ -23,10 +23,10 @@ namespace characters
         const int &GetTotalHealth() const;
 
         const PlayerCharacterClass &GetPlayerClass() const;
-        void SetPlayerClass(PlayerCharacterClass newPlayerClass);
+        void SetPlayerClass(const PlayerCharacterClass &newPlayerClass);
 
         const PlayerCharacterAncestry &GetAncestry() const;
-        void SetAncestry(PlayerCharacterAncestry newAncestry);
+        void SetAncestry(const PlayerCharacterAncestry &newAncestry);
 
         void AcceptCharacterVisitor(const PlayerCharacterVisitor &visitor);
 
@@ -34,7 +34,7 @@ namespace characters
         void AddBoost(const AttributeBoost &newLevelBoost);
 
         void AddSkill(const Skill &newSkill);
-        void SetSkillRank(const std::string skillName, EnumProficiencies proficiency);
+        void SetSkillRank(const std::string &skillName, EnumProficiencies proficiency);
         Skill &GetSkill(const std::string &skillName);
 
         void CalculateTotalHealth();

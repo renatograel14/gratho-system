@@ -20,23 +20,13 @@ namespace characters
         CalculateTotalHealth();
     }
 
-    const PlayerCharacterClass &PlayerCharacterSheet::GetPlayerClass() const
-    {
-        return playerClass;
-    }
-
-    void PlayerCharacterSheet::SetPlayerClass(PlayerCharacterClass newPlayerClass)
+    void PlayerCharacterSheet::SetPlayerClass(const PlayerCharacterClass &newPlayerClass)
     {
         playerClass = newPlayerClass;
         CalculateTotalHealth();
     }
 
-    const PlayerCharacterAncestry &PlayerCharacterSheet::GetAncestry() const
-    {
-        return ancestry;
-    }
-
-    void PlayerCharacterSheet::SetAncestry(PlayerCharacterAncestry newAncestry)
+    void PlayerCharacterSheet::SetAncestry(const PlayerCharacterAncestry &newAncestry)
     {
         ancestry = newAncestry;
         CalculateTotalHealth();
@@ -107,7 +97,7 @@ namespace characters
         skills.push_back(newSkill);
     }
 
-    void PlayerCharacterSheet::SetSkillRank(std::string skillName, EnumProficiencies proficiency)
+    void PlayerCharacterSheet::SetSkillRank(const std::string &skillName, EnumProficiencies proficiency)
     {
         Skill &skill = GetSkill(skillName);
         skill.SetSkillRank(proficiency);

@@ -13,7 +13,7 @@ private:
     std::vector<std::string> skillChoices;
 
 public:
-    FighterVisitor(std::vector<std::string> skillChoices) : skillChoices(skillChoices) {}
+    explicit FighterVisitor(std::vector<std::string> &skillChoices) : skillChoices(skillChoices) {}
     void visit(characters::PlayerCharacterSheet &sheet) const override
     {
 
@@ -44,8 +44,8 @@ private:
 
 public:
     HumanVisitor(
-        std::map<characters::EnumAttributes, bool> boostChoices,
-        std::map<characters::EnumAttributes, bool> flawChoices) : boostChoices(boostChoices), flawChoices(flawChoices) {}
+        std::map<characters::EnumAttributes, bool> &boostChoices,
+        std::map<characters::EnumAttributes, bool> &flawChoices) : boostChoices(boostChoices), flawChoices(flawChoices) {}
 
     void visit(characters::PlayerCharacterSheet &sheet) const override
     {
@@ -68,14 +68,22 @@ int main()
     cout << "Running..." << endl;
 
     PlayerCharacterSheet playerCharacterFighter("José");
+
+    map<EnumAttributes, bool> humanBoostChoices = {
+        {EnumAttributes::Strength, true},
+        {EnumAttributes::Constitution, true},
+        {EnumAttributes::Dexterity, true},
+    };
+
+    map<EnumAttributes, bool> humanFlawChoices = {
+        {{EnumAttributes::Intelligence, true}}};
+
     playerCharacterFighter.AcceptCharacterVisitor(
-        HumanVisitor({
-                         {EnumAttributes::Strength, true},
-                         {EnumAttributes::Constitution, true},
-                         {EnumAttributes::Dexterity, true},
-                     },
-                     {{EnumAttributes::Intelligence, true}}));
-    playerCharacterFighter.AcceptCharacterVisitor(FighterVisitor({"Athletics", "Acrobatics", "Deception", "Intimidation", "Stealth"}));
+        HumanVisitor(humanBoostChoices, humanFlawChoices));
+
+    vector<string> fighterSkillChoices = {"Athletics", "Acrobatics", "Deception", "Intimidation", "Stealth"};
+
+    playerCharacterFighter.AcceptCharacterVisitor(FighterVisitor(fighterSkillChoices));
 
     cout << endl;
     cout << endl;
