@@ -32,8 +32,8 @@ namespace characters
 
     private:
         std::string name;
-        PlayerCharacterAncestry &ancestry;
-        PlayerCharacterClass &playerClass;
+        PlayerCharacterAncestry ancestry;
+        PlayerCharacterClass playerClass;
         std::vector<AttributeBoost> levelBoosts;
         std::map<EnumAttributes, int> attributes;
         std::vector<Skill> skills;
