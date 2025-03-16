@@ -11,8 +11,8 @@ namespace characters
     public:
         AttributeBoost(
             std::string source,
-            std::map<characters::EnumAttributes, bool> boost,
-            std::map<characters::EnumAttributes, bool> flaw);
+            const std::map<characters::EnumAttributes, bool> &boost,
+            const std::map<characters::EnumAttributes, bool> &flaw);
 
         int CountAttributeInBoost(characters::EnumAttributes attr) const;
 

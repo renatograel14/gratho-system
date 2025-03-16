@@ -1,7 +1,7 @@
 #ifndef PLAYERCLASSVISITOR_H
 #define PLAYERCLASSVISITOR_H
 
-#include <vector>
+#include <map>
 #include <string>
 #include "characters/PlayerCharacterVisitor.h"
 #include "characters/PlayerCharacterClass.h"
@@ -13,16 +13,16 @@ namespace characters
 {
     class PlayerClassVisitor : public PlayerCharacterVisitor
     {
-    private:
-        PlayerCharacterClass playerClass;
-        std::vector<std::string> skillChoices;
-
     public:
         PlayerClassVisitor(
-            PlayerCharacterClass &playerClass,
-            std::vector<std::string> &skillChoices);
+            const PlayerCharacterClass &playerClass,
+            const std::map<std::string, bool> &skillChoices);
 
         void visit(PlayerCharacterSheet &sheet) const override;
+
+    private:
+        PlayerCharacterClass playerClass;
+        std::map<std::string, bool> skillChoices;
     };
 }
 

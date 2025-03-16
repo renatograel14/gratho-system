@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 #include <map>
 #include "characters/PlayerCharacterClass.h"
 #include "characters/PlayerCharacterAncestry.h"
@@ -19,27 +18,40 @@ int main()
 
     PlayerCharacterSheet playerCharacterFighter("José");
 
-    map<EnumAttributes, bool> humanBoostChoices = {
-        {EnumAttributes::Strength, true},
-        {EnumAttributes::Constitution, true},
-        {EnumAttributes::Dexterity, true},
-    };
-
-    map<EnumAttributes, bool> humanFlawChoices = {
-        {EnumAttributes::Intelligence, true}};
-    PlayerCharacterAncestry human("Human", 8);
+    PlayerCharacterAncestry elf("Elf", 6,
+                                {
+                                    {EnumAttributes::Dexterity, true},
+                                    {EnumAttributes::Intelligence, true},
+                                },
+                                {{EnumAttributes::Constitution, true}});
 
     playerCharacterFighter.AcceptCharacterVisitor(
-        AncestryVisitor(human, humanBoostChoices, humanFlawChoices));
+        AncestryVisitor(elf, {{EnumAttributes::Strength, true}}, {}));
 
-    PlayerCharacterClass fighter("Fighter", 10, EnumAttributes::Strength);
-    vector<string> fighterSkillChoices = {"Athletics", "Acrobatics", "Deception", "Intimidation", "Stealth"};
-    PlayerClassVisitor fighterVisitor(fighter, fighterSkillChoices);
+    PlayerCharacterClass fighter("Fighter", 10, EnumAttributes::Strength, 3, {},
+                                 {
+                                     {"Athletics", true},
+                                     {"Acrobatics", true},
+                                 });
+
+    PlayerClassVisitor fighterVisitor(fighter,
+                                      {{"Athletics", true},
+                                       {"Acrobatics", true},
+                                       {"Survival", true},
+                                       {"Intimidation", true}});
 
     playerCharacterFighter.AcceptCharacterVisitor(fighterVisitor);
 
-    cout
-        << "\n";
+    playerCharacterFighter.AddBoost(AttributeBoost("Level 1",
+                                                   {
+                                                       {EnumAttributes::Strength, true},
+                                                       {EnumAttributes::Dexterity, true},
+                                                       {EnumAttributes::Intelligence, true},
+                                                       {EnumAttributes::Constitution, true},
+                                                   },
+                                                   {}));
+
+    cout << "\n";
     cout << "\n";
     cout << "Name: " << playerCharacterFighter.GetName() << "\n";
     cout << "Ancestry: " << playerCharacterFighter.GetAncestry().GetName() << "\n";

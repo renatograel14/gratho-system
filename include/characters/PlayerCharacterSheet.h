@@ -18,9 +18,9 @@ namespace characters
     public:
         explicit PlayerCharacterSheet(std::string name);
 
-        const std::string &GetName() const;
+        const std::string GetName() const;
         const int GetAttribute(EnumAttributes attr) const;
-        const int &GetTotalHealth() const;
+        int GetTotalHealth() const;
 
         const PlayerCharacterClass &GetPlayerClass() const;
         void SetPlayerClass(const PlayerCharacterClass &newPlayerClass);

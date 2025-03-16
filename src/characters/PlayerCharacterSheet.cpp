@@ -1,19 +1,19 @@
-#include "characters/PlayerCharacterSheet.h"
-#include "characters/DefaultSkills.h"
-#include "characters/PlayerCharacterVisitor.h"
 #include <cmath>
 #include <iostream>
 #include <iomanip>
 #include <algorithm>
 #include <stdexcept>
+#include "characters/PlayerCharacterSheet.h"
+#include "characters/DefaultSkills.h"
+#include "characters/PlayerCharacterVisitor.h"
 
 namespace characters
 {
     PlayerCharacterSheet::PlayerCharacterSheet(std::string name)
         : name(name),
           boosts({}),
-          ancestry(PlayerCharacterAncestry("No Acestry", 0)),
-          playerClass(PlayerCharacterClass("No Class", 0, EnumAttributes::Strength))
+          ancestry(PlayerCharacterAncestry("No Acestry", 0, {}, {})),
+          playerClass(PlayerCharacterClass("No Class", 0, EnumAttributes::Strength, 0, {}, {}))
     {
         CalculateAttributes();
         InitializeDefaultSkills();
@@ -42,7 +42,7 @@ namespace characters
         return boosts;
     }
 
-    const std::string &PlayerCharacterSheet::GetName() const
+    const std::string PlayerCharacterSheet::GetName() const
     {
         return name;
     }
@@ -59,17 +59,15 @@ namespace characters
 
     const int PlayerCharacterSheet::GetAttribute(EnumAttributes attr) const
     {
-        try
+        auto it = attributes.find(attr);
+        if (it != attributes.end())
         {
-            return attributes.at(attr);
+            return it->second;
         }
-        catch (const std::out_of_range &e)
-        {
-            return 0;
-        }
+        return 0;
     }
 
-    const int &PlayerCharacterSheet::GetTotalHealth() const
+    int PlayerCharacterSheet::GetTotalHealth() const
     {
         return totalHealth;
     }
@@ -78,6 +76,7 @@ namespace characters
     {
         boosts.push_back(newLevelBoost);
         CalculateAttributes();
+        CalculateTotalHealth();
     }
 
     void PlayerCharacterSheet::PrintAllAttributes() const
@@ -165,11 +164,6 @@ namespace characters
 
     void PlayerCharacterSheet::CalculateAttributes()
     {
-        for (int i = 0; i < 6; ++i)
-        {
-            attributes[static_cast<EnumAttributes>(i)] = 0;
-        }
-
         std::map<EnumAttributes, int> totalBoosts = AccumulateBoosts();
 
         for (const auto &pair : totalBoosts)

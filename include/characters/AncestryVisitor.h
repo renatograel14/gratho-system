@@ -13,15 +13,15 @@ namespace characters
     class AncestryVisitor : public PlayerCharacterVisitor
     {
     private:
-        PlayerCharacterAncestry ancestry;
+        PlayerCharacterAncestry &ancestry;
         std::map<EnumAttributes, bool> boostChoices;
         std::map<EnumAttributes, bool> flawChoices;
 
     public:
         AncestryVisitor(
             PlayerCharacterAncestry &ancestry,
-            std::map<EnumAttributes, bool> &boostChoices,
-            std::map<EnumAttributes, bool> &flawChoices);
+            const std::map<EnumAttributes, bool> &boostChoices,
+            const std::map<EnumAttributes, bool> &flawChoices);
 
         void visit(PlayerCharacterSheet &sheet) const override;
     };
