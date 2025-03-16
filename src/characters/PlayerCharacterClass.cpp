@@ -8,8 +8,33 @@ namespace characters
     PlayerCharacterClass::PlayerCharacterClass(
         std::string name,
         int health,
-        characters::EnumAttributes keyAttribute)
-        : name(name), health(health), keyAttribute(keyAttribute) {}
+        characters::EnumAttributes keyAttribute,
+        int freeSkillsQuantity,
+        const std::map<std::string, bool> &givenSkills,
+        const std::map<std::string, bool> &requiredSkills)
+        : name(name),
+          health(health),
+          keyAttribute(keyAttribute),
+          freeSkillsQuantity(freeSkillsQuantity),
+          givenSkills(givenSkills),
+          requiredSkills(requiredSkills)
+    {
+    }
+
+    int PlayerCharacterClass::GetFreeSkillsQuantity() const
+    {
+        return freeSkillsQuantity;
+    }
+
+    const std::map<std::string, bool> &PlayerCharacterClass::GetGivenSkills() const
+    {
+        return givenSkills;
+    }
+
+    const std::map<std::string, bool> &PlayerCharacterClass::GetRequiredSkills() const
+    {
+        return requiredSkills;
+    }
 
     const EnumAttributes &PlayerCharacterClass::GetKeyAttribute() const
     {

@@ -13,7 +13,7 @@ namespace characters
         : name(name),
           boosts({}),
           ancestry(PlayerCharacterAncestry("No Acestry", 0, {}, {})),
-          playerClass(PlayerCharacterClass("No Class", 0, EnumAttributes::Strength))
+          playerClass(PlayerCharacterClass("No Class", 0, EnumAttributes::Strength, 0, {}, {}))
     {
         CalculateAttributes();
         InitializeDefaultSkills();

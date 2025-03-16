@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 #include <map>
 #include "characters/PlayerCharacterClass.h"
 #include "characters/PlayerCharacterAncestry.h"
@@ -29,9 +28,17 @@ int main()
     playerCharacterFighter.AcceptCharacterVisitor(
         AncestryVisitor(elf, {{EnumAttributes::Strength, true}}, {}));
 
-    PlayerCharacterClass fighter("Fighter", 10, EnumAttributes::Strength);
-    vector<string> fighterSkillChoices = {"Athletics", "Acrobatics", "Deception", "Intimidation", "Stealth"};
-    PlayerClassVisitor fighterVisitor(fighter, fighterSkillChoices);
+    PlayerCharacterClass fighter("Fighter", 10, EnumAttributes::Strength, 3, {},
+                                 {
+                                     {"Athletics", true},
+                                     {"Acrobatics", true},
+                                 });
+
+    PlayerClassVisitor fighterVisitor(fighter,
+                                      {{"Athletics", true},
+                                       {"Acrobatics", true},
+                                       {"Survival", true},
+                                       {"Intimidation", true}});
 
     playerCharacterFighter.AcceptCharacterVisitor(fighterVisitor);
 

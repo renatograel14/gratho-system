@@ -14,8 +14,8 @@ namespace characters
     {
     private:
         PlayerCharacterAncestry &ancestry;
-        const std::map<EnumAttributes, bool> &boostChoices;
-        const std::map<EnumAttributes, bool> &flawChoices;
+        std::map<EnumAttributes, bool> boostChoices;
+        std::map<EnumAttributes, bool> flawChoices;
 
     public:
         AncestryVisitor(
