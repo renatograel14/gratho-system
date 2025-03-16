@@ -42,10 +42,11 @@ namespace characters
         void PrintAllAttributes() const;
 
     private:
+        std::string name;
+
         PlayerCharacterClass playerClass;
         PlayerCharacterAncestry ancestry;
 
-        std::string name;
         std::map<EnumAttributes, int> attributes;
         std::vector<Skill> skills;
         std::vector<AttributeBoost> boosts;
