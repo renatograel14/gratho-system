@@ -12,6 +12,8 @@ add_library(characters STATIC
     src/characters/PlayerCharacterClass.cpp
     src/characters/PlayerCharacterSheet.cpp
     src/characters/Skill.cpp
+    src/characters/PlayerClassVisitor.cpp
+    src/characters/AncestryVisitor.cpp
 )
 target_include_directories(characters PUBLIC include)
 # target_link_libraries(characters PUBLIC items) 
