@@ -5,8 +5,8 @@ using namespace characters;
 
 AncestryVisitor::AncestryVisitor(
     PlayerCharacterAncestry &ancestry,
-    std::map<EnumAttributes, bool> &boostChoices,
-    std::map<EnumAttributes, bool> &flawChoices)
+    const std::map<EnumAttributes, bool> &boostChoices,
+    const std::map<EnumAttributes, bool> &flawChoices)
     : ancestry(ancestry), boostChoices(boostChoices), flawChoices(flawChoices)
 {
 }

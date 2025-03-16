@@ -19,24 +19,30 @@ int main()
 
     PlayerCharacterSheet playerCharacterFighter("José");
 
-    map<EnumAttributes, bool> humanBoostChoices = {
-        {EnumAttributes::Strength, true},
-        {EnumAttributes::Constitution, true},
-        {EnumAttributes::Dexterity, true},
-    };
-
-    map<EnumAttributes, bool> humanFlawChoices = {
-        {EnumAttributes::Intelligence, true}};
-    PlayerCharacterAncestry human("Human", 8, {}, {});
+    PlayerCharacterAncestry elf("Elf", 6,
+                                {
+                                    {EnumAttributes::Dexterity, true},
+                                    {EnumAttributes::Intelligence, true},
+                                },
+                                {{EnumAttributes::Constitution, true}});
 
     playerCharacterFighter.AcceptCharacterVisitor(
-        AncestryVisitor(human, humanBoostChoices, humanFlawChoices));
+        AncestryVisitor(elf, {{EnumAttributes::Strength, true}}, {}));
 
     PlayerCharacterClass fighter("Fighter", 10, EnumAttributes::Strength);
     vector<string> fighterSkillChoices = {"Athletics", "Acrobatics", "Deception", "Intimidation", "Stealth"};
     PlayerClassVisitor fighterVisitor(fighter, fighterSkillChoices);
 
     playerCharacterFighter.AcceptCharacterVisitor(fighterVisitor);
+
+    playerCharacterFighter.AddBoost(AttributeBoost("Level 1",
+                                                   {
+                                                       {EnumAttributes::Strength, true},
+                                                       {EnumAttributes::Dexterity, true},
+                                                       {EnumAttributes::Intelligence, true},
+                                                       {EnumAttributes::Constitution, true},
+                                                   },
+                                                   {}));
 
     cout
         << "\n";

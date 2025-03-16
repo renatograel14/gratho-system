@@ -6,8 +6,8 @@ namespace characters
 {
     AttributeBoost::AttributeBoost(
         std::string source,
-        std::map<characters::EnumAttributes, bool> const boost,
-        std::map<characters::EnumAttributes, bool> const flaw) : source(source), boost(boost), flaw(flaw) {}
+        const std::map<characters::EnumAttributes, bool> &boost,
+        const std::map<characters::EnumAttributes, bool> &flaw) : source(source), boost(boost), flaw(flaw) {}
 
     int AttributeBoost::CountAttributeInBoost(characters::EnumAttributes attr) const
     {

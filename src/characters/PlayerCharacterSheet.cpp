@@ -76,6 +76,7 @@ namespace characters
     {
         boosts.push_back(newLevelBoost);
         CalculateAttributes();
+        CalculateTotalHealth();
     }
 
     void PlayerCharacterSheet::PrintAllAttributes() const
