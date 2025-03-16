@@ -44,8 +44,7 @@ int main()
                                                    },
                                                    {}));
 
-    cout
-        << "\n";
+    cout << "\n";
     cout << "\n";
     cout << "Name: " << playerCharacterFighter.GetName() << "\n";
     cout << "Ancestry: " << playerCharacterFighter.GetAncestry().GetName() << "\n";
