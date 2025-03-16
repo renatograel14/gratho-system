@@ -7,57 +7,60 @@
 #include "characters/EnumAttributes.h"
 #include "characters/PlayerCharacterVisitor.h"
 
-class FighterVisitor : public characters::PlayerCharacterVisitor
+using namespace characters;
+using namespace std;
+
+class FighterVisitor : public PlayerCharacterVisitor
 {
 private:
-    std::vector<std::string> skillChoices;
+    vector<string> skillChoices;
 
 public:
-    explicit FighterVisitor(std::vector<std::string> &skillChoices) : skillChoices(skillChoices) {}
-    void visit(characters::PlayerCharacterSheet &sheet) const override
+    explicit FighterVisitor(vector<string> &skillChoices) : skillChoices(skillChoices) {}
+    void visit(PlayerCharacterSheet &sheet) const override
     {
-
         // validar se Acrobatics ou Athletics estão presentes nas escolhas
         if (skillChoices.size() != 5)
         {
-            throw std::invalid_argument("");
+            throw invalid_argument("");
         }
 
         for (const auto &skill : skillChoices)
         {
-            sheet.SetSkillRank(skill, characters::EnumProficiencies::Trained);
+            sheet.SetSkillRank(skill, EnumProficiencies::Trained);
         }
 
-        sheet.AddBoost(characters::AttributeBoost("Fighter", {{characters::EnumAttributes::Strength, true}}, {}));
+        PlayerCharacterClass fighter("Fighter", 10, EnumAttributes::Strength);
+        sheet.SetPlayerClass(fighter);
+        sheet.AddBoost(AttributeBoost("Fighter", {{fighter.GetKeyAttribute(), true}}, {}));
 
-        sheet.SetPlayerClass(characters::PlayerCharacterClass("Fighter", 10, characters::EnumAttributes::Strength));
-        std::cout
-            << sheet.GetName() << ": Now, I'm a fighter class" << std::endl;
+        cout
+            << sheet.GetName() << ": Now, I'm a fighter class" << endl;
     }
 };
 
-class HumanVisitor : public characters::PlayerCharacterVisitor
+class HumanVisitor : public PlayerCharacterVisitor
 {
 private:
-    std::map<characters::EnumAttributes, bool> boostChoices;
-    std::map<characters::EnumAttributes, bool> flawChoices;
+    map<EnumAttributes, bool> boostChoices;
+    map<EnumAttributes, bool> flawChoices;
 
 public:
     HumanVisitor(
-        std::map<characters::EnumAttributes, bool> &boostChoices,
-        std::map<characters::EnumAttributes, bool> &flawChoices) : boostChoices(boostChoices), flawChoices(flawChoices) {}
+        map<EnumAttributes, bool> &boostChoices,
+        map<EnumAttributes, bool> &flawChoices) : boostChoices(boostChoices), flawChoices(flawChoices) {}
 
-    void visit(characters::PlayerCharacterSheet &sheet) const override
+    void visit(PlayerCharacterSheet &sheet) const override
     {
-        sheet.SetAncestry(characters::PlayerCharacterAncestry("Human", 8));
+        sheet.SetAncestry(PlayerCharacterAncestry("Human", 8));
 
         if (boostChoices.size() == 3 && flawChoices.size() != 1)
         {
-            throw std::invalid_argument("");
+            throw invalid_argument("");
         }
 
-        sheet.AddBoost(characters::AttributeBoost("Human", boostChoices, flawChoices));
-        std::cout << sheet.GetName() << ": Now, I'm a human ancestry" << std::endl;
+        sheet.AddBoost(AttributeBoost("Human", boostChoices, flawChoices));
+        cout << sheet.GetName() << ": Now, I'm a human ancestry" << endl;
     }
 };
 

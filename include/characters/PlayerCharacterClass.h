@@ -9,13 +9,14 @@ namespace characters
     class PlayerCharacterClass
     {
     public:
-        PlayerCharacterClass(std::string name, int health, characters::EnumAttributes keyAttribute);
+        PlayerCharacterClass(std::string name, int health, EnumAttributes keyAttribute);
         int GetHealth() const;
+        const EnumAttributes &GetKeyAttribute() const;
 
     private:
         std::string name;
         int health;
-        characters::EnumAttributes keyAttribute;
+        EnumAttributes keyAttribute;
     };
 
 }
