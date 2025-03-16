@@ -47,6 +47,16 @@ namespace characters
         return name;
     }
 
+    const PlayerCharacterAncestry &PlayerCharacterSheet::GetAncestry() const
+    {
+        return ancestry;
+    }
+
+    const PlayerCharacterClass &PlayerCharacterSheet::GetPlayerClass() const
+    {
+        return playerClass;
+    }
+
     const int PlayerCharacterSheet::GetAttribute(EnumAttributes attr) const
     {
         try

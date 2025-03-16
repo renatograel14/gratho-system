@@ -18,6 +18,7 @@ namespace characters
           proficiency(proficiency)
     {
     }
+
     void Skill::SetSkillRank(characters::EnumProficiencies rank)
     {
         proficiency = rank;
@@ -26,5 +27,10 @@ namespace characters
     const std::string &Skill::GetSkillName() const
     {
         return name;
+    }
+
+    const EnumProficiencies &Skill::GetProficiency() const
+    {
+        return proficiency;
     }
 }
