@@ -38,12 +38,16 @@ int main()
 
     playerCharacterFighter.AcceptCharacterVisitor(fighterVisitor);
 
-    cout << endl;
-    cout << endl;
-    cout << "Name: " << playerCharacterFighter.GetName() << endl;
-    cout << "Health Points: " << playerCharacterFighter.GetTotalHealth() << endl;
+    cout
+        << "\n";
+    cout << "\n";
+    cout << "Name: " << playerCharacterFighter.GetName() << "\n";
+    cout << "Ancestry: " << playerCharacterFighter.GetAncestry().GetName() << "\n";
+    cout << "Class: " << playerCharacterFighter.GetPlayerClass().GetName() << "\n";
+    cout << "Athletics Skill: " << EnumProficienciesToString.at(playerCharacterFighter.GetSkill("Athletics").GetProficiency()) << "\n";
+    cout << "Health Points: " << playerCharacterFighter.GetTotalHealth() << "\n";
     playerCharacterFighter.PrintAllAttributes();
-    cout << endl;
-    cout << endl;
+    cout << "\n";
+    cout << "\n";
     return 0;
 }

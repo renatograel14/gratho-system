@@ -15,6 +15,7 @@ namespace characters
               characters::EnumProficiencies proficiency);
         void SetSkillRank(characters::EnumProficiencies rank);
         const std::string &GetSkillName() const;
+        const EnumProficiencies &GetProficiency() const;
 
     private:
         std::string source;

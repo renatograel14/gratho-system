@@ -18,6 +18,13 @@ namespace characters
         {EnumProficiencies::Expert, 4},
         {EnumProficiencies::Master, 6},
         {EnumProficiencies::Legendary, 8}};
+
+    static const std::map<characters::EnumProficiencies, std::string> EnumProficienciesToString = {
+        {EnumProficiencies::Untrained, "Untrained"},
+        {EnumProficiencies::Trained, "Trained"},
+        {EnumProficiencies::Expert, "Expert"},
+        {EnumProficiencies::Master, "Master"},
+        {EnumProficiencies::Legendary, "Lengendary"}};
 }
 
 #endif // ENUM_PROFICIENCIES_H
