@@ -10,8 +10,19 @@ namespace characters
         int health,
         characters::EnumAttributes keyAttribute)
         : name(name), health(health), keyAttribute(keyAttribute) {}
-    int PlayerCharacterClass::GetHealth() const
+
+    const EnumAttributes &PlayerCharacterClass::GetKeyAttribute() const
+    {
+        return keyAttribute;
+    }
+
+    const int &PlayerCharacterClass::GetHealth() const
     {
         return health;
+    }
+
+    const std::string &PlayerCharacterClass::GetName() const
+    {
+        return name;
     }
 }

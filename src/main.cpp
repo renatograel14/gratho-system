@@ -10,16 +10,22 @@
 using namespace characters;
 using namespace std;
 
-class FighterVisitor : public PlayerCharacterVisitor
+class PlayerClassVisitor : public PlayerCharacterVisitor
 {
 private:
+    PlayerCharacterClass playerClass;
     vector<string> skillChoices;
 
 public:
-    explicit FighterVisitor(vector<string> &skillChoices) : skillChoices(skillChoices) {}
+    PlayerClassVisitor(
+        PlayerCharacterClass &playerClass,
+        vector<string> &skillChoices)
+        : playerClass(playerClass), skillChoices(skillChoices)
+    {
+    }
     void visit(PlayerCharacterSheet &sheet) const override
     {
-        // validar se Acrobatics ou Athletics estão presentes nas escolhas
+        // validar se skills que a classe fornece playerClass.GetAvailableSkills()
         if (skillChoices.size() != 5)
         {
             throw invalid_argument("");
@@ -30,37 +36,35 @@ public:
             sheet.SetSkillRank(skill, EnumProficiencies::Trained);
         }
 
-        PlayerCharacterClass fighter("Fighter", 10, EnumAttributes::Strength);
-        sheet.SetPlayerClass(fighter);
-        sheet.AddBoost(AttributeBoost("Fighter", {{fighter.GetKeyAttribute(), true}}, {}));
-
-        cout
-            << sheet.GetName() << ": Now, I'm a fighter class" << endl;
+        sheet.SetPlayerClass(playerClass);
+        sheet.AddBoost(AttributeBoost(playerClass.GetName(), {{playerClass.GetKeyAttribute(), true}}, {}));
     }
 };
 
-class HumanVisitor : public PlayerCharacterVisitor
+class AncestryVisitor : public PlayerCharacterVisitor
 {
 private:
+    PlayerCharacterAncestry ancestry;
     map<EnumAttributes, bool> boostChoices;
     map<EnumAttributes, bool> flawChoices;
 
 public:
-    HumanVisitor(
+    AncestryVisitor(
+        PlayerCharacterAncestry &ancestry,
         map<EnumAttributes, bool> &boostChoices,
-        map<EnumAttributes, bool> &flawChoices) : boostChoices(boostChoices), flawChoices(flawChoices) {}
+        map<EnumAttributes, bool> &flawChoices) : ancestry(ancestry), boostChoices(boostChoices), flawChoices(flawChoices) {}
 
     void visit(PlayerCharacterSheet &sheet) const override
     {
-        sheet.SetAncestry(PlayerCharacterAncestry("Human", 8));
 
+        // validate attribute boost by ancestry available boosts
         if (boostChoices.size() == 3 && flawChoices.size() != 1)
         {
             throw invalid_argument("");
         }
 
-        sheet.AddBoost(AttributeBoost("Human", boostChoices, flawChoices));
-        cout << sheet.GetName() << ": Now, I'm a human ancestry" << endl;
+        sheet.SetAncestry(ancestry);
+        sheet.AddBoost(AttributeBoost(ancestry.GetName(), boostChoices, flawChoices));
     }
 };
 
@@ -80,13 +84,16 @@ int main()
 
     map<EnumAttributes, bool> humanFlawChoices = {
         {{EnumAttributes::Intelligence, true}}};
+    PlayerCharacterAncestry human("Human", 8);
 
     playerCharacterFighter.AcceptCharacterVisitor(
-        HumanVisitor(humanBoostChoices, humanFlawChoices));
+        AncestryVisitor(human, humanBoostChoices, humanFlawChoices));
 
+    PlayerCharacterClass fighter("Fighter", 10, EnumAttributes::Strength);
     vector<string> fighterSkillChoices = {"Athletics", "Acrobatics", "Deception", "Intimidation", "Stealth"};
+    PlayerClassVisitor fighterVisitor(fighter, fighterSkillChoices);
 
-    playerCharacterFighter.AcceptCharacterVisitor(FighterVisitor(fighterSkillChoices));
+    playerCharacterFighter.AcceptCharacterVisitor(fighterVisitor);
 
     cout << endl;
     cout << endl;

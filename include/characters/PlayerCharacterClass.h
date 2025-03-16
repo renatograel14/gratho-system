@@ -10,8 +10,9 @@ namespace characters
     {
     public:
         PlayerCharacterClass(std::string name, int health, EnumAttributes keyAttribute);
-        int GetHealth() const;
+        const int &GetHealth() const;
         const EnumAttributes &GetKeyAttribute() const;
+        const std::string &GetName() const;
 
     private:
         std::string name;

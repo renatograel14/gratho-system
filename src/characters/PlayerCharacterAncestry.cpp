@@ -12,4 +12,9 @@ namespace characters
     {
         return health;
     }
+
+    const std::string &PlayerCharacterAncestry::GetName() const
+    {
+        return name;
+    }
 }
