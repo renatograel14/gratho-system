@@ -35,7 +35,7 @@ namespace characters
 
         void AddSkill(const Skill &newSkill);
         void SetSkillRank(const std::string &skillName, EnumProficiencies proficiency);
-        Skill &GetSkill(const std::string &skillName);
+        const Skill &GetSkill(const std::string &skillName) const;
 
         void CalculateTotalHealth();
 
@@ -55,6 +55,8 @@ namespace characters
         int CalculateAttributeValue(int boostCount) const;
         void CalculateAttributes();
         void InitializeDefaultSkills();
+        std::vector<Skill>::iterator FindSkillIterator(const std::string &skillName);
+        std::vector<Skill>::const_iterator FindSkillIterator(const std::string &skillName) const;
     };
 }
 
