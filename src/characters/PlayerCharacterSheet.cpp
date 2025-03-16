@@ -12,7 +12,7 @@ namespace characters
     PlayerCharacterSheet::PlayerCharacterSheet(std::string name)
         : name(name),
           boosts({}),
-          ancestry(PlayerCharacterAncestry("No Acestry", 0)),
+          ancestry(PlayerCharacterAncestry("No Acestry", 0, {}, {})),
           playerClass(PlayerCharacterClass("No Class", 0, EnumAttributes::Strength))
     {
         CalculateAttributes();

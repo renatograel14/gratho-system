@@ -27,7 +27,7 @@ int main()
 
     map<EnumAttributes, bool> humanFlawChoices = {
         {EnumAttributes::Intelligence, true}};
-    PlayerCharacterAncestry human("Human", 8);
+    PlayerCharacterAncestry human("Human", 8, {}, {});
 
     playerCharacterFighter.AcceptCharacterVisitor(
         AncestryVisitor(human, humanBoostChoices, humanFlawChoices));
