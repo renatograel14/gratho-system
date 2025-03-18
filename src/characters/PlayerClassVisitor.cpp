@@ -15,7 +15,7 @@ PlayerClassVisitor::PlayerClassVisitor(
 void PlayerClassVisitor::visit(PlayerCharacterSheet &sheet) const
 {
     // Calculate the total number of allowed skills:
-    // Free skills + Given skills + Intelligence modifier
+    // Free skills + Given skills
     int countSkills = playerClass.GetFreeSkillsQuantity() +
                       playerClass.GetGivenSkills().size();
 
@@ -42,10 +42,10 @@ void PlayerClassVisitor::visit(PlayerCharacterSheet &sheet) const
     }
 
     // Since `skillChoices` is a map, the number of selected skills must match:
-    // Free skills + Given skills + Additional skills (based on Intelligence modifier)
+    // Free skills + Given skills
     // Example:
     // Animist is trained in Religion AND a choice between Nature or Occultism, totaling 2 skills.
-    // Additionally, they get 2 + Intelligence modifier skills. So, 4 + Intelligence skills.
+    // Additionally, they get 2 skills. So, 2 + 2 = 4.
     if (skillChoices.size() != countSkills)
     {
         throw std::invalid_argument("Invalid skills quantity");
