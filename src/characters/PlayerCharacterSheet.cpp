@@ -184,10 +184,4 @@ namespace characters
         return std::find_if(proficiencies.begin(), proficiencies.end(), [&skillName](const PlayerCharacterProficiency &obj)
                             { return obj.GetSkill().GetSkillName() == skillName; });
     }
-
-    std::vector<PlayerCharacterProficiency>::const_iterator PlayerCharacterSheet::FindSkillIteratorByRank(const EnumSkillRank &rank) const
-    {
-        return std::find_if(proficiencies.begin(), proficiencies.end(), [&rank](const PlayerCharacterProficiency &obj)
-                            { return obj.GetRank() == rank; });
-    }
 }

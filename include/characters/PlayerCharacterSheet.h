@@ -59,7 +59,6 @@ namespace characters
         void InitializeDefaultSkills();
         std::vector<PlayerCharacterProficiency>::iterator FindSkillIteratorByName(const std::string &skillName);
         std::vector<PlayerCharacterProficiency>::const_iterator FindSkillIteratorByName(const std::string &skillName) const;
-        std::vector<PlayerCharacterProficiency>::const_iterator FindSkillIteratorByRank(const EnumSkillRank &rank) const;
     };
 }
 
