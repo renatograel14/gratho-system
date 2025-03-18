@@ -9,19 +9,14 @@ namespace characters
     class Skill
     {
     public:
-        Skill(std::string source,
-              std::string name,
-              characters::EnumAttributes attribute,
-              characters::EnumProficiencies proficiency);
+        Skill(std::string name,
+              characters::EnumAttributes attribute);
         void SetSkillRank(characters::EnumProficiencies rank);
         const std::string &GetSkillName() const;
-        const EnumProficiencies &GetProficiency() const;
 
     private:
-        std::string source;
         std::string name;
         characters::EnumAttributes attribute;
-        characters::EnumProficiencies proficiency;
     };
 
 }

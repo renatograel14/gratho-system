@@ -89,31 +89,26 @@ namespace characters
         }
     }
 
-    const Skill &PlayerCharacterSheet::GetSkill(const std::string &skillName) const
+    const PlayerCharacterProficiency &PlayerCharacterSheet::GetProficiency(const Skill &skill) const
     {
-        auto it = FindSkillIterator(skillName);
-        if (it != skills.end())
+        auto it = FindSkillIterator(skill.GetSkillName());
+        if (it != proficiencies.end())
         {
             return *it;
         }
-        throw std::invalid_argument("Skillname not found in this sheet: " + skillName);
+        throw std::invalid_argument("No proficiency found in this sheet: " + skill.GetSkillName());
     }
 
-    void PlayerCharacterSheet::AddSkill(const Skill &newSkill)
+    void PlayerCharacterSheet::AddProficiency(const Skill &skill, EnumProficiencies rank, const std::string &source)
     {
-        skills.push_back(newSkill);
-    }
-
-    void PlayerCharacterSheet::SetSkillRank(const std::string &skillName, EnumProficiencies proficiency)
-    {
-        auto it = FindSkillIterator(skillName);
-        if (it != skills.end())
+        auto it = FindSkillIterator(skill.GetSkillName());
+        if (it != proficiencies.end())
         {
-            it->SetSkillRank(proficiency);
+            it->SetRank(rank);
         }
         else
         {
-            throw std::invalid_argument("Skillname not found in this sheet: " + skillName);
+            proficiencies.push_back(PlayerCharacterProficiency(source, skill, rank));
         }
     }
 
@@ -123,7 +118,7 @@ namespace characters
     {
         for (const auto &skill : DefaultSkills())
         {
-            AddSkill(skill);
+            AddProficiency(skill, EnumProficiencies::Untrained, "default");
         }
     }
 
@@ -178,15 +173,15 @@ namespace characters
         totalHealth = ancestry.GetHealth() + playerClass.GetHealth() + constitution;
     }
 
-    std::vector<Skill>::iterator PlayerCharacterSheet::FindSkillIterator(const std::string &skillName)
+    std::vector<PlayerCharacterProficiency>::iterator PlayerCharacterSheet::FindSkillIterator(const std::string &skillName)
     {
-        return std::find_if(skills.begin(), skills.end(), [&skillName](const Skill &obj)
-                            { return obj.GetSkillName() == skillName; });
+        return std::find_if(proficiencies.begin(), proficiencies.end(), [&skillName](const PlayerCharacterProficiency &obj)
+                            { return obj.GetSkill().GetSkillName() == skillName; });
     }
 
-    std::vector<Skill>::const_iterator PlayerCharacterSheet::FindSkillIterator(const std::string &skillName) const
+    std::vector<PlayerCharacterProficiency>::const_iterator PlayerCharacterSheet::FindSkillIterator(const std::string &skillName) const
     {
-        return std::find_if(skills.begin(), skills.end(), [&skillName](const Skill &obj)
-                            { return obj.GetSkillName() == skillName; });
+        return std::find_if(proficiencies.begin(), proficiencies.end(), [&skillName](const PlayerCharacterProficiency &obj)
+                            { return obj.GetSkill().GetSkillName() == skillName; });
     }
 }

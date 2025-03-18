@@ -8,29 +8,14 @@
 namespace characters
 {
     Skill::Skill(
-        std::string source,
         std::string name,
-        characters::EnumAttributes attribute,
-        characters::EnumProficiencies proficiency)
-        : source(source),
-          name(name),
-          attribute(attribute),
-          proficiency(proficiency)
+        characters::EnumAttributes attribute)
+        : name(name),
+          attribute(attribute)
     {
     }
-
-    void Skill::SetSkillRank(characters::EnumProficiencies rank)
-    {
-        proficiency = rank;
-    }
-
     const std::string &Skill::GetSkillName() const
     {
         return name;
-    }
-
-    const EnumProficiencies &Skill::GetProficiency() const
-    {
-        return proficiency;
     }
 }

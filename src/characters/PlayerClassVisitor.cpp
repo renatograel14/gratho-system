@@ -7,7 +7,7 @@ using namespace characters;
 
 PlayerClassVisitor::PlayerClassVisitor(
     const PlayerCharacterClass &playerClass,
-    const std::map<std::string, bool> &skillChoices)
+    const std::map<Skill *, bool> &skillChoices)
     : playerClass(playerClass), skillChoices(skillChoices)
 {
 }
@@ -29,7 +29,7 @@ void PlayerClassVisitor::visit(PlayerCharacterSheet &sheet) const
         auto missingSkill = std::find_if(
             playerClass.GetRequiredSkills().begin(),
             playerClass.GetRequiredSkills().end(),
-            [this](const std::pair<std::string, bool> &requiredSkill)
+            [this](const std::pair<Skill *, bool> &requiredSkill)
             {
                 return skillChoices.find(requiredSkill.first) == skillChoices.end();
             });
@@ -37,7 +37,7 @@ void PlayerClassVisitor::visit(PlayerCharacterSheet &sheet) const
         // If a missing skill is found, throw an exception
         if (missingSkill != playerClass.GetRequiredSkills().end())
         {
-            throw std::invalid_argument("Required skill not chosen: " + missingSkill->first);
+            throw std::invalid_argument("Required skill not chosen: " + missingSkill->first->GetSkillName());
         }
     }
 
@@ -54,13 +54,13 @@ void PlayerClassVisitor::visit(PlayerCharacterSheet &sheet) const
     // Apply the fixed skills provided by the class
     for (const auto &pair : playerClass.GetGivenSkills())
     {
-        sheet.SetSkillRank(pair.first, EnumProficiencies::Trained);
+        sheet.AddProficiency(*pair.first, EnumProficiencies::Trained, playerClass.GetName());
     }
 
     // Apply the skills chosen by the player
     for (const auto &pair : skillChoices)
     {
-        sheet.SetSkillRank(pair.first, EnumProficiencies::Trained);
+        sheet.AddProficiency(*pair.first, EnumProficiencies::Trained, playerClass.GetName());
     }
 
     // Set the player's class and apply the attribute boost
