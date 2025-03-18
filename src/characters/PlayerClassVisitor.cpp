@@ -15,9 +15,7 @@ PlayerClassVisitor::PlayerClassVisitor(
 void PlayerClassVisitor::visit(PlayerCharacterSheet &sheet) const
 {
     // Calculate the total number of allowed skills:
-    // Free skills + Given skills
-    int countSkills = playerClass.GetFreeSkillsQuantity() +
-                      playerClass.GetGivenSkills().size();
+    int countSkills = playerClass.GetFreeSkillsQuantity();
 
     // If there are required skills, validate them
     if (playerClass.GetRequiredSkills().size() > 0)

@@ -17,6 +17,10 @@ Skill Acrobatics("Acrobatics", EnumAttributes::Dexterity);
 Skill Survival("Survival", EnumAttributes::Dexterity);
 Skill Intimidation("Intimidation", EnumAttributes::Charisma);
 
+Skill SimpleWeapons("SimpleWeapons", EnumAttributes::None);
+Skill MartialWeapon("MartialWeapon", EnumAttributes::None);
+Skill SwordMastery("SwordMastery", EnumAttributes::None);
+
 int main()
 {
     cout << "Running..." << endl;
@@ -33,17 +37,23 @@ int main()
     playerCharacterFighter.AcceptCharacterVisitor(
         AncestryVisitor(elf, {{EnumAttributes::Strength, true}}, {}));
 
-    PlayerCharacterClass fighter("Fighter", 10, EnumAttributes::Strength, 3, {},
+    PlayerCharacterClass fighter("Fighter", 10, EnumAttributes::Strength, 3,
+                                 {
+                                     {&SimpleWeapons, true},
+                                     {&MartialWeapon, true},
+                                 },
                                  {
                                      {&Athletics, true},
                                      {&Acrobatics, true},
                                  });
 
     PlayerClassVisitor fighterVisitor(fighter,
-                                      {{&Athletics, true},
-                                       {&Acrobatics, true},
-                                       {&Survival, true},
-                                       {&Intimidation, true}});
+                                      {
+                                          {&Athletics, true},
+                                          {&Acrobatics, true},
+                                          {&Survival, true},
+                                          {&Intimidation, true},
+                                      });
 
     playerCharacterFighter.AcceptCharacterVisitor(fighterVisitor);
 
