@@ -71,7 +71,7 @@ int main()
     cout << "Name: " << playerCharacterFighter.GetName() << "\n";
     cout << "Ancestry: " << playerCharacterFighter.GetAncestry().GetName() << "\n";
     cout << "Class: " << playerCharacterFighter.GetPlayerClass().GetName() << "\n";
-    cout << "Athletics Skill: " << EnumProficienciesToString.at(playerCharacterFighter.GetProficiency(Athletics).GetRank()) << "\n";
+    cout << "Athletics Skill: " << EnumSkillRankToString.at(playerCharacterFighter.GetProficiency(Athletics).GetRank()) << "\n";
     cout << "Health Points: " << playerCharacterFighter.GetTotalHealth() << "\n";
     playerCharacterFighter.PrintAllAttributes();
     cout << "\n";

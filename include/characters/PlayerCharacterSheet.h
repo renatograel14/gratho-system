@@ -8,6 +8,7 @@
 #include "characters/PlayerCharacterClass.h"
 #include "characters/PlayerCharacterAncestry.h"
 #include "characters/EnumAttributes.h"
+#include "characters/EnumSkillRank.h"
 #include "characters/PlayerCharacterProficiency.h"
 #include "characters/Skill.h"
 
@@ -34,7 +35,7 @@ namespace characters
         const std::vector<AttributeBoost> &GetBoosts() const;
         void AddBoost(const AttributeBoost &newLevelBoost);
 
-        void AddProficiency(const Skill &skill, EnumProficiencies proficiency, const std::string &source);
+        void AddProficiency(const Skill &skill, EnumSkillRank proficiency, const std::string &source);
         const PlayerCharacterProficiency &GetProficiency(const Skill &skill) const;
         const std::vector<PlayerCharacterProficiency *> &GetUntrainedProficiencies() const;
 
@@ -58,7 +59,7 @@ namespace characters
         void InitializeDefaultSkills();
         std::vector<PlayerCharacterProficiency>::iterator FindSkillIteratorByName(const std::string &skillName);
         std::vector<PlayerCharacterProficiency>::const_iterator FindSkillIteratorByName(const std::string &skillName) const;
-        std::vector<PlayerCharacterProficiency>::const_iterator FindSkillIteratorByRank(const EnumProficiencies &rank) const;
+        std::vector<PlayerCharacterProficiency>::const_iterator FindSkillIteratorByRank(const EnumSkillRank &rank) const;
     };
 }
 

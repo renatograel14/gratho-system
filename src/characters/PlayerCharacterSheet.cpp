@@ -99,7 +99,7 @@ namespace characters
         throw std::invalid_argument("No proficiency found in this sheet: " + skill.GetSkillName());
     }
 
-    void PlayerCharacterSheet::AddProficiency(const Skill &skill, EnumProficiencies rank, const std::string &source)
+    void PlayerCharacterSheet::AddProficiency(const Skill &skill, EnumSkillRank rank, const std::string &source)
     {
         auto it = FindSkillIteratorByName(skill.GetSkillName());
         if (it != proficiencies.end())
@@ -118,7 +118,7 @@ namespace characters
     {
         for (const auto &skill : DefaultSkills())
         {
-            AddProficiency(skill, EnumProficiencies::Untrained, "default");
+            AddProficiency(skill, EnumSkillRank::Untrained, "default");
         }
     }
 
@@ -185,7 +185,7 @@ namespace characters
                             { return obj.GetSkill().GetSkillName() == skillName; });
     }
 
-    std::vector<PlayerCharacterProficiency>::const_iterator PlayerCharacterSheet::FindSkillIteratorByRank(const EnumProficiencies &rank) const
+    std::vector<PlayerCharacterProficiency>::const_iterator PlayerCharacterSheet::FindSkillIteratorByRank(const EnumSkillRank &rank) const
     {
         return std::find_if(proficiencies.begin(), proficiencies.end(), [&rank](const PlayerCharacterProficiency &obj)
                             { return obj.GetRank() == rank; });

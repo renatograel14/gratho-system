@@ -52,13 +52,13 @@ void PlayerClassVisitor::visit(PlayerCharacterSheet &sheet) const
     // Apply the fixed skills provided by the class
     for (const auto &pair : playerClass.GetGivenSkills())
     {
-        sheet.AddProficiency(*pair.first, EnumProficiencies::Trained, playerClass.GetName());
+        sheet.AddProficiency(*pair.first, EnumSkillRank::Trained, playerClass.GetName());
     }
 
     // Apply the skills chosen by the player
     for (const auto &pair : skillChoices)
     {
-        sheet.AddProficiency(*pair.first, EnumProficiencies::Trained, playerClass.GetName());
+        sheet.AddProficiency(*pair.first, EnumSkillRank::Trained, playerClass.GetName());
     }
 
     // Set the player's class and apply the attribute boost

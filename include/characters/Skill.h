@@ -2,7 +2,7 @@
 #define SKILL_H
 #include <iostream>
 #include "characters/EnumAttributes.h"
-#include "characters/EnumProficiences.h"
+#include "characters/EnumSkillRank.h"
 
 namespace characters
 {
@@ -11,7 +11,6 @@ namespace characters
     public:
         Skill(std::string name,
               characters::EnumAttributes attribute);
-        void SetSkillRank(characters::EnumProficiencies rank);
         const std::string &GetSkillName() const;
 
     private:
