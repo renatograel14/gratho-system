@@ -89,16 +89,6 @@ namespace characters
         }
     }
 
-    const std::vector<PlayerCharacterProficiency *> &PlayerCharacterSheet::GetProficiencies() const
-    {
-        auto it = FindSkillIteratorByName(skill.GetSkillName());
-        if (it != proficiencies.end())
-        {
-            return *it;
-        }
-        throw std::invalid_argument("No proficiency found in this sheet: " + skill.GetSkillName());
-    }
-
     const PlayerCharacterProficiency &PlayerCharacterSheet::GetProficiency(const Skill &skill) const
     {
         auto it = FindSkillIteratorByName(skill.GetSkillName());
