@@ -7,7 +7,7 @@ using namespace characters;
 
 PlayerClassVisitor::PlayerClassVisitor(
     const PlayerCharacterClass &playerClass,
-    const std::map<std::string, bool> &skillChoices)
+    const std::map<Skill *, bool> &skillChoices)
     : playerClass(playerClass), skillChoices(skillChoices)
 {
 }
@@ -15,7 +15,7 @@ PlayerClassVisitor::PlayerClassVisitor(
 void PlayerClassVisitor::visit(PlayerCharacterSheet &sheet) const
 {
     // Calculate the total number of allowed skills:
-    // Free skills + Given skills + Intelligence modifier
+    // Free skills + Given skills
     int countSkills = playerClass.GetFreeSkillsQuantity() +
                       playerClass.GetGivenSkills().size();
 
@@ -29,7 +29,7 @@ void PlayerClassVisitor::visit(PlayerCharacterSheet &sheet) const
         auto missingSkill = std::find_if(
             playerClass.GetRequiredSkills().begin(),
             playerClass.GetRequiredSkills().end(),
-            [this](const std::pair<std::string, bool> &requiredSkill)
+            [this](const std::pair<Skill *, bool> &requiredSkill)
             {
                 return skillChoices.find(requiredSkill.first) == skillChoices.end();
             });
@@ -37,15 +37,15 @@ void PlayerClassVisitor::visit(PlayerCharacterSheet &sheet) const
         // If a missing skill is found, throw an exception
         if (missingSkill != playerClass.GetRequiredSkills().end())
         {
-            throw std::invalid_argument("Required skill not chosen: " + missingSkill->first);
+            throw std::invalid_argument("Required skill not chosen: " + missingSkill->first->GetSkillName());
         }
     }
 
     // Since `skillChoices` is a map, the number of selected skills must match:
-    // Free skills + Given skills + Additional skills (based on Intelligence modifier)
+    // Free skills + Given skills
     // Example:
     // Animist is trained in Religion AND a choice between Nature or Occultism, totaling 2 skills.
-    // Additionally, they get 2 + Intelligence modifier skills. So, 4 + Intelligence skills.
+    // Additionally, they get 2 skills. So, 2 + 2 = 4.
     if (skillChoices.size() != countSkills)
     {
         throw std::invalid_argument("Invalid skills quantity");
@@ -54,13 +54,13 @@ void PlayerClassVisitor::visit(PlayerCharacterSheet &sheet) const
     // Apply the fixed skills provided by the class
     for (const auto &pair : playerClass.GetGivenSkills())
     {
-        sheet.SetSkillRank(pair.first, EnumProficiencies::Trained);
+        sheet.AddProficiency(*pair.first, EnumProficiencies::Trained, playerClass.GetName());
     }
 
     // Apply the skills chosen by the player
     for (const auto &pair : skillChoices)
     {
-        sheet.SetSkillRank(pair.first, EnumProficiencies::Trained);
+        sheet.AddProficiency(*pair.first, EnumProficiencies::Trained, playerClass.GetName());
     }
 
     // Set the player's class and apply the attribute boost

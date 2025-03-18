@@ -4,6 +4,7 @@
 #include <map>
 #include "characters/AttributeBoost.h"
 #include "characters/EnumAttributes.h"
+#include "characters/Skill.h"
 
 namespace characters
 {
@@ -15,15 +16,15 @@ namespace characters
             int health,
             EnumAttributes keyAttribute,
             int freeSkillsQuantity,
-            const std::map<std::string, bool> &givenSkills,
-            const std::map<std::string, bool> &requiredSkills);
+            const std::map<Skill *, bool> &givenSkills,
+            const std::map<Skill *, bool> &requiredSkills);
 
         const int &GetHealth() const;
         const EnumAttributes &GetKeyAttribute() const;
         const std::string &GetName() const;
         int GetFreeSkillsQuantity() const;
-        const std::map<std::string, bool> &GetGivenSkills() const;
-        const std::map<std::string, bool> &GetRequiredSkills() const;
+        const std::map<Skill *, bool> &GetGivenSkills() const;
+        const std::map<Skill *, bool> &GetRequiredSkills() const;
 
     private:
         std::string name;
@@ -32,8 +33,8 @@ namespace characters
         EnumAttributes keyAttribute;
 
         int freeSkillsQuantity;
-        std::map<std::string, bool> givenSkills;
-        std::map<std::string, bool> requiredSkills;
+        std::map<Skill *, bool> givenSkills;
+        std::map<Skill *, bool> requiredSkills;
     };
 
 }

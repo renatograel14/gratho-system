@@ -8,6 +8,7 @@
 #include "characters/PlayerCharacterClass.h"
 #include "characters/PlayerCharacterAncestry.h"
 #include "characters/EnumAttributes.h"
+#include "characters/PlayerCharacterProficiency.h"
 #include "characters/Skill.h"
 
 namespace characters
@@ -33,9 +34,8 @@ namespace characters
         const std::vector<AttributeBoost> &GetBoosts() const;
         void AddBoost(const AttributeBoost &newLevelBoost);
 
-        void AddSkill(const Skill &newSkill);
-        void SetSkillRank(const std::string &skillName, EnumProficiencies proficiency);
-        const Skill &GetSkill(const std::string &skillName) const;
+        void AddProficiency(const Skill &skill, EnumProficiencies proficiency, const std::string &source);
+        const PlayerCharacterProficiency &GetProficiency(const Skill &skill) const;
 
         void CalculateTotalHealth();
 
@@ -47,7 +47,7 @@ namespace characters
 
         std::string name;
         std::map<EnumAttributes, int> attributes;
-        std::vector<Skill> skills;
+        std::vector<PlayerCharacterProficiency> proficiencies;
         std::vector<AttributeBoost> boosts;
         int totalHealth;
 
@@ -55,8 +55,8 @@ namespace characters
         int CalculateAttributeValue(int boostCount) const;
         void CalculateAttributes();
         void InitializeDefaultSkills();
-        std::vector<Skill>::iterator FindSkillIterator(const std::string &skillName);
-        std::vector<Skill>::const_iterator FindSkillIterator(const std::string &skillName) const;
+        std::vector<PlayerCharacterProficiency>::iterator FindSkillIterator(const std::string &skillName);
+        std::vector<PlayerCharacterProficiency>::const_iterator FindSkillIterator(const std::string &skillName) const;
     };
 }
 
