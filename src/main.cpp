@@ -17,6 +17,10 @@ Skill Acrobatics("Acrobatics", EnumAttributes::Dexterity);
 Skill Survival("Survival", EnumAttributes::Dexterity);
 Skill Intimidation("Intimidation", EnumAttributes::Charisma);
 
+Skill SimpleWeapons("SimpleWeapons", EnumAttributes::None);
+Skill MartialWeapon("MartialWeapon", EnumAttributes::None);
+Skill SwordMastery("SwordMastery", EnumAttributes::None);
+
 int main()
 {
     cout << "Running..." << endl;
@@ -33,17 +37,23 @@ int main()
     playerCharacterFighter.AcceptCharacterVisitor(
         AncestryVisitor(elf, {{EnumAttributes::Strength, true}}, {}));
 
-    PlayerCharacterClass fighter("Fighter", 10, EnumAttributes::Strength, 3, {},
+    PlayerCharacterClass fighter("Fighter", 10, EnumAttributes::Strength, 3,
+                                 {
+                                     {&SimpleWeapons, true},
+                                     {&MartialWeapon, true},
+                                 },
                                  {
                                      {&Athletics, true},
                                      {&Acrobatics, true},
                                  });
 
     PlayerClassVisitor fighterVisitor(fighter,
-                                      {{&Athletics, true},
-                                       {&Acrobatics, true},
-                                       {&Survival, true},
-                                       {&Intimidation, true}});
+                                      {
+                                          {&Athletics, true},
+                                          {&Acrobatics, true},
+                                          {&Survival, true},
+                                          {&Intimidation, true},
+                                      });
 
     playerCharacterFighter.AcceptCharacterVisitor(fighterVisitor);
 
@@ -61,7 +71,7 @@ int main()
     cout << "Name: " << playerCharacterFighter.GetName() << "\n";
     cout << "Ancestry: " << playerCharacterFighter.GetAncestry().GetName() << "\n";
     cout << "Class: " << playerCharacterFighter.GetPlayerClass().GetName() << "\n";
-    cout << "Athletics Skill: " << EnumProficienciesToString.at(playerCharacterFighter.GetProficiency(Athletics).GetRank()) << "\n";
+    cout << "Athletics Skill: " << EnumSkillRankToString.at(playerCharacterFighter.GetProficiency(Athletics).GetRank()) << "\n";
     cout << "Health Points: " << playerCharacterFighter.GetTotalHealth() << "\n";
     playerCharacterFighter.PrintAllAttributes();
     cout << "\n";

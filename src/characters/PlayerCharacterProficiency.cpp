@@ -2,7 +2,7 @@
 #include <map>
 #include <vector>
 #include "characters/PlayerCharacterProficiency.h"
-#include "characters/EnumProficiences.h"
+#include "characters/EnumSkillRank.h"
 #include "characters/EnumAttributes.h"
 #include "characters/Skill.h"
 
@@ -11,10 +11,10 @@ namespace characters
     PlayerCharacterProficiency::PlayerCharacterProficiency(
         std::string source,
         const Skill &skill,
-        const EnumProficiencies &rank)
+        const EnumSkillRank &rank)
         : source(source), skill(skill), rank(rank) {}
 
-    const EnumProficiencies &PlayerCharacterProficiency::GetRank() const
+    const EnumSkillRank &PlayerCharacterProficiency::GetRank() const
     {
         return rank;
     }
@@ -24,7 +24,7 @@ namespace characters
         return skill;
     }
 
-    void PlayerCharacterProficiency::SetRank(EnumProficiencies newRank)
+    void PlayerCharacterProficiency::SetRank(EnumSkillRank newRank)
     {
         rank = newRank;
     }

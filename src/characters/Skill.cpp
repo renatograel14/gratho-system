@@ -1,7 +1,7 @@
 #include <iostream>
 #include <map>
 #include <vector>
-#include "characters/EnumProficiences.h"
+#include "characters/EnumSkillRank.h"
 #include "characters/EnumAttributes.h"
 #include "characters/Skill.h"
 

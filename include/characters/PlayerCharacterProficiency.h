@@ -2,8 +2,7 @@
 #define PLAYER_CHARACTER_PROFICIENCY_H
 #include <iostream>
 #include "characters/Skill.h"
-#include "characters/EnumProficiences.h"
-#include "characters/EnumProficiences.h"
+#include "characters/EnumSkillRank.h"
 
 namespace characters
 {
@@ -13,16 +12,16 @@ namespace characters
         PlayerCharacterProficiency(
             std::string source,
             const Skill &skill,
-            const EnumProficiencies &rank);
+            const EnumSkillRank &rank);
 
         const Skill &GetSkill() const;
-        const EnumProficiencies &GetRank() const;
-        void SetRank(EnumProficiencies rank);
+        const EnumSkillRank &GetRank() const;
+        void SetRank(EnumSkillRank rank);
 
     private:
         std::string source;
         Skill skill;
-        EnumProficiencies rank;
+        EnumSkillRank rank;
     };
 
 }
