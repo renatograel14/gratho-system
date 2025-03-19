@@ -14,12 +14,10 @@ namespace characters
     public:
         PlayerCharacterProficiency(std::string source, const Skill &skill, const EnumSkillRank &rank);
 
-        const std::string &GetSource() const;
         const EnumSkillRank &GetRank() const;
         const Skill &GetSkill() const;
 
         void SetRank(EnumSkillRank newRank, const std::string &changeSource);
-        void SetSource(const std::string &newSource);
 
         const std::vector<std::pair<EnumSkillRank, std::string>> &GetRankHistory() const;
 

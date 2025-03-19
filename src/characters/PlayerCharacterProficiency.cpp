@@ -18,11 +18,6 @@ namespace characters
         rankHistory.push_back(std::make_pair(rank, source));
     }
 
-    const std::string &PlayerCharacterProficiency::GetSource() const
-    {
-        return source;
-    }
-
     const EnumSkillRank &PlayerCharacterProficiency::GetRank() const
     {
         return rank;
@@ -38,11 +33,6 @@ namespace characters
         rank = newRank;
         source = changeSource;
         rankHistory.push_back(std::make_pair(newRank, changeSource));
-    }
-
-    void PlayerCharacterProficiency::SetSource(const std::string &newSource)
-    {
-        source = newSource;
     }
 
     const std::vector<std::pair<EnumSkillRank, std::string>> &PlayerCharacterProficiency::GetRankHistory() const
