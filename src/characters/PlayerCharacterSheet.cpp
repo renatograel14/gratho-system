@@ -89,6 +89,34 @@ namespace characters
         }
     }
 
+    std::vector<PlayerCharacterProficiency> PlayerCharacterSheet::GetProficienciesBySource(const std::string &source) const
+    {
+        std::vector<PlayerCharacterProficiency> filteredProficiencies;
+        filteredProficiencies.reserve(proficiencies.size());
+
+        std::copy_if(proficiencies.begin(), proficiencies.end(), std::back_inserter(filteredProficiencies),
+                     [source](const PlayerCharacterProficiency &proficiency)
+                     {
+                         return proficiency.GetSource() == source;
+                     });
+
+        return filteredProficiencies;
+    }
+
+    std::vector<PlayerCharacterProficiency> PlayerCharacterSheet::GetProficienciesByRank(const EnumSkillRank &rank) const
+    {
+        std::vector<PlayerCharacterProficiency> filteredProficiencies;
+        filteredProficiencies.reserve(proficiencies.size());
+
+        std::copy_if(proficiencies.begin(), proficiencies.end(), std::back_inserter(filteredProficiencies),
+                     [rank](const PlayerCharacterProficiency &proficiency)
+                     {
+                         return proficiency.GetRank() == rank;
+                     });
+
+        return filteredProficiencies;
+    }
+
     const PlayerCharacterProficiency &PlayerCharacterSheet::GetProficiency(const Skill &skill) const
     {
         auto it = FindSkillIteratorByName(skill.GetSkillName());

@@ -37,7 +37,8 @@ namespace characters
 
         void AddProficiency(const Skill &skill, EnumSkillRank proficiency, const std::string &source);
         const PlayerCharacterProficiency &GetProficiency(const Skill &skill) const;
-        const std::vector<PlayerCharacterProficiency *> &GetUntrainedProficiencies() const;
+        std::vector<PlayerCharacterProficiency> GetProficienciesBySource(const std::string &source) const;
+        std::vector<PlayerCharacterProficiency> GetProficienciesByRank(const EnumSkillRank &rank) const;
 
         void CalculateTotalHealth();
 

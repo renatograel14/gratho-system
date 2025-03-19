@@ -8,6 +8,7 @@
 #include "characters/PlayerCharacterVisitor.h"
 #include "characters/PlayerClassVisitor.h"
 #include "characters/AncestryVisitor.h"
+#include "characters/SkillTrainingVisitor.h"
 
 using namespace characters;
 using namespace std;
@@ -15,8 +16,10 @@ using namespace std;
 Skill Athletics("Athletics", EnumAttributes::Strength);
 Skill Acrobatics("Acrobatics", EnumAttributes::Dexterity);
 Skill Survival("Survival", EnumAttributes::Dexterity);
+Skill Society("Society", EnumAttributes::Charisma);
 Skill Intimidation("Intimidation", EnumAttributes::Charisma);
-
+Skill Arcana("Arcana", EnumAttributes::Charisma);
+Skill Occultism("Occultism", EnumAttributes::Charisma);
 Skill SimpleWeapons("SimpleWeapons", EnumAttributes::None);
 Skill MartialWeapon("MartialWeapon", EnumAttributes::None);
 
@@ -58,6 +61,18 @@ int main()
                                                        {EnumAttributes::Constitution, true},
                                                    },
                                                    {}));
+
+    playerCharacterFighter.AcceptCharacterVisitor(SkillTrainingVisitor(
+        {
+            {&Survival, true},
+            {&Intimidation, true},
+            {&Society, true},
+        }));
+    playerCharacterFighter.AcceptCharacterVisitor(SkillTrainingVisitor(
+        {
+            {&Acrobatics, true},
+            {&Arcana, true},
+        }));
 
     cout << "\n";
     cout << "\n";

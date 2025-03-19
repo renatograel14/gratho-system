@@ -34,6 +34,8 @@ namespace characters
                       EnumAttributes::Intelligence),
                 Skill("Religion",
                       EnumAttributes::Wisdom),
+                Skill("Society",
+                      EnumAttributes::Intelligence),
                 Skill("Stealth",
                       EnumAttributes::Dexterity),
                 Skill("Thievery",

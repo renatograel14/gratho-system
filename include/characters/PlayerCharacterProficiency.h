@@ -14,6 +14,7 @@ namespace characters
             const Skill &skill,
             const EnumSkillRank &rank);
 
+        const std::string &GetSource() const;
         const Skill &GetSkill() const;
         const EnumSkillRank &GetRank() const;
         void SetRank(EnumSkillRank rank);
