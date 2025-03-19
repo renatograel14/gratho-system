@@ -19,7 +19,6 @@ Skill Intimidation("Intimidation", EnumAttributes::Charisma);
 
 Skill SimpleWeapons("SimpleWeapons", EnumAttributes::None);
 Skill MartialWeapon("MartialWeapon", EnumAttributes::None);
-Skill SwordMastery("SwordMastery", EnumAttributes::None);
 
 int main()
 {
@@ -47,13 +46,7 @@ int main()
                                      {&Acrobatics, true},
                                  });
 
-    PlayerClassVisitor fighterVisitor(fighter,
-                                      {
-                                          {&Athletics, true},
-                                          {&Acrobatics, true},
-                                          {&Survival, true},
-                                          {&Intimidation, true},
-                                      });
+    PlayerClassVisitor fighterVisitor(fighter, Athletics);
 
     playerCharacterFighter.AcceptCharacterVisitor(fighterVisitor);
 

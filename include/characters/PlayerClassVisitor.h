@@ -16,13 +16,13 @@ namespace characters
     public:
         PlayerClassVisitor(
             const PlayerCharacterClass &playerClass,
-            const std::map<Skill *, bool> &skillChoices);
+            const Skill &skillChoice);
 
         void visit(PlayerCharacterSheet &sheet) const override;
 
     private:
         PlayerCharacterClass playerClass;
-        std::map<Skill *, bool> skillChoices;
+        Skill skillChoice;
     };
 }
 

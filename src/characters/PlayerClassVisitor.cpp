@@ -7,46 +7,30 @@ using namespace characters;
 
 PlayerClassVisitor::PlayerClassVisitor(
     const PlayerCharacterClass &playerClass,
-    const std::map<Skill *, bool> &skillChoices)
-    : playerClass(playerClass), skillChoices(skillChoices)
+    const Skill &skillChoice)
+    : playerClass(playerClass), skillChoice(skillChoice)
 {
 }
 
 void PlayerClassVisitor::visit(PlayerCharacterSheet &sheet) const
 {
-    // Calculate the total number of allowed skills:
-    int countSkills = playerClass.GetFreeSkillsQuantity();
-
     // If there are required skills, validate them
     if (playerClass.GetRequiredSkills().size() > 0)
     {
-        // Add a counter because the class provides an additional option between required skills
-        countSkills++;
-
-        // Use std::find_if to check if any required skill is missing in the player's choices
-        auto missingSkill = std::find_if(
+        // Use std::any_of to check if at least one required skill matches the chosen skill
+        bool isSkillChosen = std::any_of(
             playerClass.GetRequiredSkills().begin(),
             playerClass.GetRequiredSkills().end(),
             [this](const std::pair<Skill *, bool> &requiredSkill)
             {
-                return skillChoices.find(requiredSkill.first) == skillChoices.end();
+                return requiredSkill.first->GetSkillName() == skillChoice.GetSkillName();
             });
 
-        // If a missing skill is found, throw an exception
-        if (missingSkill != playerClass.GetRequiredSkills().end())
+        // If no required skill is chosen, throw an exception
+        if (!isSkillChosen)
         {
-            throw std::invalid_argument("Required skill not chosen: " + missingSkill->first->GetSkillName());
+            throw std::invalid_argument("At least one required skill must be chosen.");
         }
-    }
-
-    // Since `skillChoices` is a map, the number of selected skills must match:
-    // Free skills + Given skills
-    // Example:
-    // Animist is trained in Religion AND a choice between Nature or Occultism, totaling 2 skills.
-    // Additionally, they get 2 skills. So, 2 + 2 = 4.
-    if (skillChoices.size() != countSkills)
-    {
-        throw std::invalid_argument("Invalid skills quantity");
     }
 
     // Apply the fixed skills provided by the class
@@ -56,10 +40,7 @@ void PlayerClassVisitor::visit(PlayerCharacterSheet &sheet) const
     }
 
     // Apply the skills chosen by the player
-    for (const auto &pair : skillChoices)
-    {
-        sheet.AddProficiency(*pair.first, EnumSkillRank::Trained, playerClass.GetName());
-    }
+    sheet.AddProficiency(skillChoice, EnumSkillRank::Trained, playerClass.GetName());
 
     // Set the player's class and apply the attribute boost
     sheet.SetPlayerClass(playerClass);
