@@ -87,7 +87,12 @@ namespace characters
         std::copy_if(proficiencies.begin(), proficiencies.end(), std::back_inserter(filteredProficiencies),
                      [source](const PlayerCharacterProficiency &proficiency)
                      {
-                         return proficiency.GetSource() == source;
+                         const auto &history = proficiency.GetRankHistory();
+                         return std::any_of(history.begin(), history.end(),
+                                            [source](const std::pair<EnumSkillRank, std::string> &entry)
+                                            {
+                                                return entry.second == source;
+                                            });
                      });
 
         return filteredProficiencies;
@@ -122,8 +127,7 @@ namespace characters
         auto it = FindSkillIteratorByName(skill.GetSkillName());
         if (it != proficiencies.end())
         {
-            it->SetRank(rank);
-            it->SetSource(source);
+            it->SetRank(rank, source);
         }
         else
         {
@@ -156,8 +160,7 @@ namespace characters
             if (proficiency.GetRank() != EnumSkillRank::Untrained)
             {
                 oss << "  " << proficiency.GetSkill().GetSkillName()
-                    << " (Rank: " << EnumSkillRankToString.at(proficiency.GetRank())
-                    << ", Source: " << proficiency.GetSource() << ")\n";
+                    << " (Rank: " << EnumSkillRankToString.at(proficiency.GetRank()) << ")\n";
             }
         }
 

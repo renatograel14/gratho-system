@@ -1,6 +1,7 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include <utility>
 #include "characters/PlayerCharacterProficiency.h"
 #include "characters/EnumSkillRank.h"
 #include "characters/EnumAttributes.h"
@@ -12,7 +13,10 @@ namespace characters
         std::string source,
         const Skill &skill,
         const EnumSkillRank &rank)
-        : source(source), skill(skill), rank(rank) {}
+        : source(source), skill(skill), rank(rank)
+    {
+        rankHistory.push_back(std::make_pair(rank, source));
+    }
 
     const std::string &PlayerCharacterProficiency::GetSource() const
     {
@@ -29,9 +33,11 @@ namespace characters
         return skill;
     }
 
-    void PlayerCharacterProficiency::SetRank(EnumSkillRank newRank)
+    void PlayerCharacterProficiency::SetRank(EnumSkillRank newRank, const std::string &changeSource)
     {
         rank = newRank;
+        source = changeSource;
+        rankHistory.push_back(std::make_pair(newRank, changeSource));
     }
 
     void PlayerCharacterProficiency::SetSource(const std::string &newSource)
@@ -39,4 +45,8 @@ namespace characters
         source = newSource;
     }
 
+    const std::vector<std::pair<EnumSkillRank, std::string>> &PlayerCharacterProficiency::GetRankHistory() const
+    {
+        return rankHistory;
+    }
 }
