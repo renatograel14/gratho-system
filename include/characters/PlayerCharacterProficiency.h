@@ -1,31 +1,33 @@
-#ifndef PLAYER_CHARACTER_PROFICIENCY_H
-#define PLAYER_CHARACTER_PROFICIENCY_H
-#include <iostream>
-#include "characters/Skill.h"
+#ifndef PLAYERCHARACTERPROFICIENCY_H
+#define PLAYERCHARACTERPROFICIENCY_H
+
+#include <string>
+#include <vector>
+#include <utility>
 #include "characters/EnumSkillRank.h"
+#include "characters/Skill.h"
 
 namespace characters
 {
     class PlayerCharacterProficiency
     {
     public:
-        PlayerCharacterProficiency(
-            std::string source,
-            const Skill &skill,
-            const EnumSkillRank &rank);
+        PlayerCharacterProficiency(std::string source, const Skill &skill, const EnumSkillRank &rank);
 
-        const std::string &GetSource() const;
-        const Skill &GetSkill() const;
         const EnumSkillRank &GetRank() const;
-        void SetRank(EnumSkillRank rank);
-        void SetSource(const std::string &newSource);
+        const Skill &GetSkill() const;
+
+        void SetRank(EnumSkillRank newRank, const std::string &changeSource);
+
+        const std::vector<std::pair<EnumSkillRank, std::string>> &GetRankHistory() const;
 
     private:
         std::string source;
         Skill skill;
         EnumSkillRank rank;
-    };
 
+        std::vector<std::pair<EnumSkillRank, std::string>> rankHistory;
+    };
 }
 
-#endif // PLAYER_CHARACTER_PROFICIENCY_H
+#endif // PLAYERCHARACTERPROFICIENCY_H
