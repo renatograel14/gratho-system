@@ -11,6 +11,7 @@ namespace characters
 {
     PlayerCharacterSheet::PlayerCharacterSheet(std::string name)
         : name(name),
+          level(1),
           boosts({}),
           ancestry(PlayerCharacterAncestry("No Acestry", 0, {}, {})),
           playerClass(PlayerCharacterClass("No Class", 0, EnumAttributes::Strength, 0, {}, {}))
@@ -112,6 +113,11 @@ namespace characters
         return filteredProficiencies;
     }
 
+    int PlayerCharacterSheet::GetProficiencyModifier(const Skill &skill) const
+    {
+        return (EnumSkillRankToValue.at(GetProficiency(skill).GetRank()) * level) + GetAttribute(skill.GetSkillAttribute());
+    }
+
     const PlayerCharacterProficiency &PlayerCharacterSheet::GetProficiency(const Skill &skill) const
     {
         auto it = FindSkillIteratorByName(skill.GetSkillName());
@@ -160,7 +166,8 @@ namespace characters
             if (proficiency.GetRank() != EnumSkillRank::Untrained)
             {
                 oss << "  " << proficiency.GetSkill().GetSkillName()
-                    << " (Rank: " << EnumSkillRankToString.at(proficiency.GetRank()) << ")\n";
+                    << " (Rank: " << EnumSkillRankToString.at(proficiency.GetRank())
+                    << ", Mod: " << GetProficiencyModifier(proficiency.GetSkill()) << ")\n";
             }
         }
 

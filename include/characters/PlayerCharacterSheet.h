@@ -36,6 +36,7 @@ namespace characters
         void AddBoost(const AttributeBoost &newLevelBoost);
 
         void AddProficiency(const Skill &skill, EnumSkillRank proficiency, const std::string &source);
+        int GetProficiencyModifier(const Skill &skill) const;
         const PlayerCharacterProficiency &GetProficiency(const Skill &skill) const;
         std::vector<PlayerCharacterProficiency> GetProficienciesBySource(const std::string &source) const;
         std::vector<PlayerCharacterProficiency> GetProficienciesByRank(const EnumSkillRank &rank) const;
@@ -53,6 +54,7 @@ namespace characters
         std::vector<PlayerCharacterProficiency> proficiencies;
         std::vector<AttributeBoost> boosts;
         int totalHealth;
+        int level;
 
         std::map<EnumAttributes, int> AccumulateBoosts() const;
         int CalculateAttributeValue(int boostCount) const;
