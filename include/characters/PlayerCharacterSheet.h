@@ -44,6 +44,8 @@ namespace characters
 
         void PrintAllAttributes() const;
 
+        std::string ToString() const;
+
     private:
         PlayerCharacterClass playerClass;
         PlayerCharacterAncestry ancestry;

@@ -133,11 +133,42 @@ namespace characters
         if (it != proficiencies.end())
         {
             it->SetRank(rank);
+            it->SetSource(source);
         }
         else
         {
             proficiencies.push_back(PlayerCharacterProficiency(source, skill, rank));
         }
+    }
+
+    std::string PlayerCharacterSheet::ToString() const
+    {
+        std::ostringstream oss;
+
+        // Informações básicas do personagem
+        oss << "Character Name: " << name << "\n";
+        oss << "Class: " << playerClass.GetName() << "\n";
+
+        // Atributos
+        oss << "\nAttributes:\n";
+        for (const auto &[attribute, value] : attributes)
+        {
+            oss << "  " << EnumAttributesToString.at(attribute) << ": " << value << "\n";
+        }
+
+        // Proficiências
+        oss << "\nProficiencies:\n";
+        for (const auto &proficiency : proficiencies)
+        {
+            if (proficiency.GetRank() != EnumSkillRank::Untrained)
+            {
+                oss << "  " << proficiency.GetSkill().GetSkillName()
+                    << " (Rank: " << EnumSkillRankToString.at(proficiency.GetRank())
+                    << ", Source: " << proficiency.GetSource() << ")\n";
+            }
+        }
+
+        return oss.str();
     }
 
     // PRIVATE METHODS

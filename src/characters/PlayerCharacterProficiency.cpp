@@ -34,4 +34,9 @@ namespace characters
         rank = newRank;
     }
 
+    void PlayerCharacterProficiency::SetSource(const std::string &newSource)
+    {
+        source = newSource;
+    }
+
 }
