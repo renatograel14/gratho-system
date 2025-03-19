@@ -1,8 +1,9 @@
-#ifndef PLAYERCLASSVISITOR_H
-#define PLAYERCLASSVISITOR_H
+#ifndef SKILLTRAINING_H
+#define SKILLTRAINING_H
 
 #include <map>
 #include <string>
+#include "characters/Skill.h"
 #include "characters/PlayerCharacterVisitor.h"
 #include "characters/PlayerCharacterClass.h"
 #include "characters/PlayerCharacterSheet.h"
@@ -11,19 +12,16 @@
 
 namespace characters
 {
-    class PlayerClassVisitor : public PlayerCharacterVisitor
+    class SkillTrainingVisitor : public PlayerCharacterVisitor
     {
     public:
-        PlayerClassVisitor(
-            const PlayerCharacterClass &playerClass,
-            const Skill &skillChoice);
+        explicit SkillTrainingVisitor(const std::map<Skill *, bool> &skillChoices);
 
         void visit(PlayerCharacterSheet &sheet) const override;
 
     private:
-        PlayerCharacterClass playerClass;
-        Skill skillChoice;
+        const std::map<Skill *, bool> skillChoices;
     };
 }
 
-#endif // PLAYERCLASSVISITOR_H
+#endif // SKILLTRAINING_H

@@ -8,6 +8,7 @@
 #include "characters/PlayerCharacterVisitor.h"
 #include "characters/PlayerClassVisitor.h"
 #include "characters/AncestryVisitor.h"
+#include "characters/SkillTrainingVisitor.h"
 
 using namespace characters;
 using namespace std;
@@ -15,11 +16,12 @@ using namespace std;
 Skill Athletics("Athletics", EnumAttributes::Strength);
 Skill Acrobatics("Acrobatics", EnumAttributes::Dexterity);
 Skill Survival("Survival", EnumAttributes::Dexterity);
+Skill Society("Society", EnumAttributes::Charisma);
 Skill Intimidation("Intimidation", EnumAttributes::Charisma);
-
+Skill Arcana("Arcana", EnumAttributes::Charisma);
+Skill Occultism("Occultism", EnumAttributes::Charisma);
 Skill SimpleWeapons("SimpleWeapons", EnumAttributes::None);
 Skill MartialWeapon("MartialWeapon", EnumAttributes::None);
-Skill SwordMastery("SwordMastery", EnumAttributes::None);
 
 int main()
 {
@@ -47,13 +49,7 @@ int main()
                                      {&Acrobatics, true},
                                  });
 
-    PlayerClassVisitor fighterVisitor(fighter,
-                                      {
-                                          {&Athletics, true},
-                                          {&Acrobatics, true},
-                                          {&Survival, true},
-                                          {&Intimidation, true},
-                                      });
+    PlayerClassVisitor fighterVisitor(fighter, Athletics);
 
     playerCharacterFighter.AcceptCharacterVisitor(fighterVisitor);
 
@@ -66,15 +62,23 @@ int main()
                                                    },
                                                    {}));
 
+    playerCharacterFighter.AcceptCharacterVisitor(SkillTrainingVisitor(
+        {
+            {&Survival, true},
+            {&Intimidation, true},
+            {&Society, true},
+        }));
+    playerCharacterFighter.AcceptCharacterVisitor(SkillTrainingVisitor(
+        {
+            {&Acrobatics, true},
+            {&Arcana, true},
+        }));
+
     cout << "\n";
     cout << "\n";
-    cout << "Name: " << playerCharacterFighter.GetName() << "\n";
-    cout << "Ancestry: " << playerCharacterFighter.GetAncestry().GetName() << "\n";
-    cout << "Class: " << playerCharacterFighter.GetPlayerClass().GetName() << "\n";
-    cout << "Athletics Skill: " << EnumSkillRankToString.at(playerCharacterFighter.GetProficiency(Athletics).GetRank()) << "\n";
-    cout << "Health Points: " << playerCharacterFighter.GetTotalHealth() << "\n";
-    playerCharacterFighter.PrintAllAttributes();
+    cout << playerCharacterFighter.ToString() << "\n";
     cout << "\n";
+    cout << Athletics.GetSkillName() << " modifier: " << EnumSkillRankToValue.at(playerCharacterFighter.GetProficiency(Athletics).GetRank()) << "\n";
     cout << "\n";
     return 0;
 }

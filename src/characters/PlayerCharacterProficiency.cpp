@@ -14,6 +14,11 @@ namespace characters
         const EnumSkillRank &rank)
         : source(source), skill(skill), rank(rank) {}
 
+    const std::string &PlayerCharacterProficiency::GetSource() const
+    {
+        return source;
+    }
+
     const EnumSkillRank &PlayerCharacterProficiency::GetRank() const
     {
         return rank;
@@ -27,6 +32,11 @@ namespace characters
     void PlayerCharacterProficiency::SetRank(EnumSkillRank newRank)
     {
         rank = newRank;
+    }
+
+    void PlayerCharacterProficiency::SetSource(const std::string &newSource)
+    {
+        source = newSource;
     }
 
 }

@@ -79,14 +79,32 @@ namespace characters
         CalculateTotalHealth();
     }
 
-    void PlayerCharacterSheet::PrintAllAttributes() const
+    std::vector<PlayerCharacterProficiency> PlayerCharacterSheet::GetProficienciesBySource(const std::string &source) const
     {
-        std::cout << "Attributes" << std::endl;
-        for (const auto pair : attributes)
-        {
-            std::string attrName = EnumAttributesToString.at(pair.first);
-            std::cout << attrName << ": " << std::setw(15 - attrName.length()) << std::right << pair.second << std::endl;
-        }
+        std::vector<PlayerCharacterProficiency> filteredProficiencies;
+        filteredProficiencies.reserve(proficiencies.size());
+
+        std::copy_if(proficiencies.begin(), proficiencies.end(), std::back_inserter(filteredProficiencies),
+                     [source](const PlayerCharacterProficiency &proficiency)
+                     {
+                         return proficiency.GetSource() == source;
+                     });
+
+        return filteredProficiencies;
+    }
+
+    std::vector<PlayerCharacterProficiency> PlayerCharacterSheet::GetProficienciesByRank(const EnumSkillRank &rank) const
+    {
+        std::vector<PlayerCharacterProficiency> filteredProficiencies;
+        filteredProficiencies.reserve(proficiencies.size());
+
+        std::copy_if(proficiencies.begin(), proficiencies.end(), std::back_inserter(filteredProficiencies),
+                     [rank](const PlayerCharacterProficiency &proficiency)
+                     {
+                         return proficiency.GetRank() == rank;
+                     });
+
+        return filteredProficiencies;
     }
 
     const PlayerCharacterProficiency &PlayerCharacterSheet::GetProficiency(const Skill &skill) const
@@ -105,11 +123,45 @@ namespace characters
         if (it != proficiencies.end())
         {
             it->SetRank(rank);
+            it->SetSource(source);
         }
         else
         {
             proficiencies.push_back(PlayerCharacterProficiency(source, skill, rank));
         }
+    }
+
+    std::string PlayerCharacterSheet::ToString() const
+    {
+        std::ostringstream oss;
+
+        // Informações básicas do personagem
+        oss << "Character Name: " << name << "\n";
+        oss << "Ancestry: " << GetAncestry().GetName() << "\n";
+        oss << "Class: " << GetPlayerClass().GetName() << "\n";
+
+        oss << "\nTotal Health: " << GetTotalHealth() << "\n";
+
+        // Atributos
+        oss << "\nAttributes:\n";
+        for (const auto &[attribute, value] : attributes)
+        {
+            oss << "  " << EnumAttributesToString.at(attribute) << ": " << value << "\n";
+        }
+
+        // Proficiências
+        oss << "\nProficiencies:\n";
+        for (const auto &proficiency : proficiencies)
+        {
+            if (proficiency.GetRank() != EnumSkillRank::Untrained)
+            {
+                oss << "  " << proficiency.GetSkill().GetSkillName()
+                    << " (Rank: " << EnumSkillRankToString.at(proficiency.GetRank())
+                    << ", Source: " << proficiency.GetSource() << ")\n";
+            }
+        }
+
+        return oss.str();
     }
 
     // PRIVATE METHODS
