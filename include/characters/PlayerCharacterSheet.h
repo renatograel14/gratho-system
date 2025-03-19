@@ -42,8 +42,6 @@ namespace characters
 
         void CalculateTotalHealth();
 
-        void PrintAllAttributes() const;
-
         std::string ToString() const;
 
     private:

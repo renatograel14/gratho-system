@@ -78,6 +78,7 @@ int main()
     cout << "\n";
     cout << playerCharacterFighter.ToString() << "\n";
     cout << "\n";
+    cout << Athletics.GetSkillName() << " modifier: " << EnumSkillRankToValue.at(playerCharacterFighter.GetProficiency(Athletics).GetRank()) << "\n";
     cout << "\n";
     return 0;
 }

@@ -79,16 +79,6 @@ namespace characters
         CalculateTotalHealth();
     }
 
-    void PlayerCharacterSheet::PrintAllAttributes() const
-    {
-        std::cout << "Attributes" << std::endl;
-        for (const auto pair : attributes)
-        {
-            std::string attrName = EnumAttributesToString.at(pair.first);
-            std::cout << attrName << ": " << std::setw(15 - attrName.length()) << std::right << pair.second << std::endl;
-        }
-    }
-
     std::vector<PlayerCharacterProficiency> PlayerCharacterSheet::GetProficienciesBySource(const std::string &source) const
     {
         std::vector<PlayerCharacterProficiency> filteredProficiencies;
@@ -147,7 +137,10 @@ namespace characters
 
         // Informações básicas do personagem
         oss << "Character Name: " << name << "\n";
-        oss << "Class: " << playerClass.GetName() << "\n";
+        oss << "Ancestry: " << GetAncestry().GetName() << "\n";
+        oss << "Class: " << GetPlayerClass().GetName() << "\n";
+
+        oss << "\nTotal Health: " << GetTotalHealth() << "\n";
 
         // Atributos
         oss << "\nAttributes:\n";
