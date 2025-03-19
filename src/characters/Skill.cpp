@@ -18,4 +18,8 @@ namespace characters
     {
         return name;
     }
+    const EnumAttributes &Skill::GetSkillAttribute() const
+    {
+        return attribute;
+    }
 }

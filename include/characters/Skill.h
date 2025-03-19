@@ -12,6 +12,7 @@ namespace characters
         Skill(std::string name,
               characters::EnumAttributes attribute);
         const std::string &GetSkillName() const;
+        const EnumAttributes &GetSkillAttribute() const;
 
     private:
         std::string name;
